@@ -34,29 +34,29 @@
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Command="{Binding NewVisualisation}" Content="{x:Static properties:Resources.NewVisualisation}" Style="{StaticResource ButtonStyle}"/>
             <Button Grid.Row="1" Command="{Binding StartVisualisation}" Content="{x:Static properties:Resources.StartVisualisation}" Style="{StaticResource ButtonStyle}"/>
-            <Button Grid.Row="2" Content="{x:Static properties:Resources.PauseVisualisation}" Style="{StaticResource ButtonStyle}"/>
-            <Button Grid.Row="3" Content="{x:Static properties:Resources.RestartVisualisation}" Style="{StaticResource ButtonStyle}"/>
-            <StackPanel Grid.Row="4">
+            <Button Grid.Row="2" Command="{Binding PauseVisualisation}" Content="{x:Static properties:Resources.PauseVisualisation}"  Style="{StaticResource ButtonStyle}"/>
+            <Button Grid.Row="3" Command="{Binding RestartVisualisation}" Content="{x:Static properties:Resources.RestartVisualisation}"  Style="{StaticResource ButtonStyle}"/>
+            <StackPanel Grid.Row="4" IsEnabled="{Binding IsVisualisationDisabled}">
                 <Label Content="{x:Static properties:Resources.VisualisationSpeed}" Style="{StaticResource LabelStyle}"/>
                 <Slider Style="{StaticResource SliderStyle}"/>
             </StackPanel>
-            <StackPanel Grid.Row="5">
+            <StackPanel Grid.Row="5" IsEnabled="{Binding IsVisualisationDisabled}">
                 <Label Content="{x:Static properties:Resources.SelectionType}" Style="{StaticResource LabelStyle}"/>
                 <RadioButton Style="{StaticResource RadioButtonStyle}" Content="First sel" />
                 <!--IsChecked="{Binding SepiaType[0], Mode=TwoWay}"-->
                 <RadioButton Style="{StaticResource RadioButtonStyle}" Content="Second sel"/>
             </StackPanel>
-            <StackPanel Grid.Row="6">
+            <StackPanel Grid.Row="6" IsEnabled="{Binding IsVisualisationDisabled}">
                 <Label Content="{x:Static properties:Resources.CrossoverType}" Style="{StaticResource LabelStyle}"/>
                 <RadioButton Style="{StaticResource RadioButtonStyle}" Content="First cross" />
                 <RadioButton Style="{StaticResource RadioButtonStyle}" Content="Second cross"/>
             </StackPanel>
-            <StackPanel Grid.Row="7">
+            <StackPanel Grid.Row="7" IsEnabled="{Binding IsVisualisationDisabled}">
                 <Label Content="{x:Static properties:Resources.MutationType}" Style="{StaticResource LabelStyle}"/>
                 <RadioButton Style="{StaticResource RadioButtonStyle}" Content="First mut" />
                 <RadioButton Style="{StaticResource RadioButtonStyle}" Content="Second mut"/>
             </StackPanel>
-            <StackPanel Grid.Row="8">
+            <StackPanel Grid.Row="8" IsEnabled="{Binding IsVisualisationDisabled}">
                 <Label Content="{x:Static properties:Resources.MutationRate}" Style="{StaticResource LabelStyle}"/>
                 <Slider Style="{StaticResource SliderStyle}"/>
             </StackPanel>

@@ -2,10 +2,6 @@
 using ColorVisualisation.Model.Extension;
 using System;
 
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-
 namespace ColorVisualisation.Model.Generator
 {
     class BitmapGenerator
@@ -29,6 +25,22 @@ namespace ColorVisualisation.Model.Generator
                     rawPixels[row, col, _pixelValues - 1] = byte.MaxValue;
                 }
             }        
+
+            return rawPixels;
+        }
+
+        public byte[,,] Empty()
+        {
+            var rawPixels = new byte[_height, _width, _pixelValues];
+
+            for (int row = 0; row < _height; row++)
+            {
+                for (int col = 0; col < _width; col++)
+                {
+                    for (int i = 0; i < _pixelValues; i++)
+                        rawPixels[row, col, i] = byte.MaxValue;
+                }
+            }
 
             return rawPixels;
         }
