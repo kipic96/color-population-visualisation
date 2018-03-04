@@ -70,11 +70,38 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 10.
+        /// </summary>
+        public static string BitmapHeight {
+            get {
+                return ResourceManager.GetString("BitmapHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 10.
+        /// </summary>
+        public static string BitmapWidth {
+            get {
+                return ResourceManager.GetString("BitmapWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crossover Type.
         /// </summary>
         public static string CrossoverType {
             get {
                 return ResourceManager.GetString("CrossoverType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 96.
+        /// </summary>
+        public static string DPI {
+            get {
+                return ResourceManager.GetString("DPI", resourceCulture);
             }
         }
         
@@ -102,6 +129,15 @@ namespace ColorVisualisation.Properties {
         public static string NewVisualisation {
             get {
                 return ResourceManager.GetString("NewVisualisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4.
+        /// </summary>
+        public static string NumberOfValuesInPixel {
+            get {
+                return ResourceManager.GetString("NumberOfValuesInPixel", resourceCulture);
             }
         }
         

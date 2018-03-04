@@ -1,4 +1,7 @@
-﻿using ColorVisualisation.ViewModel.Base;
+﻿using ColorVisualisation.Model;
+using ColorVisualisation.Model.Conversion;
+using ColorVisualisation.Model.Generator;
+using ColorVisualisation.ViewModel.Base;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -8,6 +11,23 @@ namespace ColorVisualisation.ViewModel
 {
     class VisualisationViewModel : BaseViewModel
     {
+        private GeneticManager _geneticManager;
+
+        private byte[,,] _rawPixels;
+        private byte[,,] RawPixels
+        {
+            get
+            {
+                return _rawPixels;
+            }
+            set
+            {
+                _rawPixels = value;
+                var converter = new BitmapConverter(_rawPixels);
+                PixelsImage = converter.ToBitmap();                    
+            }
+        }
+
         private WriteableBitmap _pixelsImage;
         public WriteableBitmap PixelsImage
         {
@@ -29,76 +49,34 @@ namespace ColorVisualisation.ViewModel
                     _newVisualisation = new NoParameterCommand(
                         () =>
                         {
-                            Visu();
+                            var bitmapGenerator = new BitmapGenerator();
+                            RawPixels = bitmapGenerator.Generate();
                         });
                 }
                 return _newVisualisation;
             }
         }
 
-        private void Visu()
+        private ICommand _startVisualisation;
+        public ICommand StartVisualisation
         {
-            const int width = 240;
-            const int height = 240;
-
-            PixelsImage = new WriteableBitmap(
-                width, height, 96, 96, PixelFormats.Bgra32, null);
-            byte[,,] pixels = new byte[height, width, 4];
-
-            // Clear to black.
-            for (int row = 0; row < height; row++)
+            get
             {
-                for (int col = 0; col < width; col++)
+                if (_startVisualisation == null)
                 {
-                    for (int i = 0; i < 3; i++)
-                        pixels[row, col, i] = 0;
-                    pixels[row, col, 3] = 255;
-                }
-            }
+                    _startVisualisation = new NoParameterCommand(
+                        () =>
+                        {
+                            _geneticManager = new GeneticManager(RawPixels);
 
-            // Blue.
-            for (int row = 0; row < 80; row++)
-            {
-                for (int col = 0; col <= row; col++)
-                {
-                    pixels[row, col, 0] = 255;
+                            while (true)
+                            {
+                                RawPixels = _geneticManager.NextGeneration();
+                            }
+                        });
                 }
+                return _startVisualisation;
             }
-
-            // Green.
-            for (int row = 80; row < 160; row++)
-            {
-                for (int col = 0; col < 80; col++)
-                {
-                    pixels[row, col, 1] = 255;
-                }
-            }
-
-            // Red.
-            for (int row = 160; row < 240; row++)
-            {
-                for (int col = 0; col < 80; col++)
-                {
-                    pixels[row, col, 2] = 255;
-                }
-            }
-
-            // Copy the data into a one-dimensional array.
-            byte[] pixels1d = new byte[height * width * 4];
-            int index = 0;
-            for (int row = 0; row < height; row++)
-            {
-                for (int col = 0; col < width; col++)
-                {
-                    for (int i = 0; i < 4; i++)
-                        pixels1d[index++] = pixels[row, col, i];
-                }
-            }
-
-            // Update writeable bitmap with the colorArray to the image.
-            Int32Rect rect = new Int32Rect(0, 0, width, height);
-            int stride = 4 * width;
-            PixelsImage.WritePixels(rect, pixels1d, stride, 0);
         }
     }
 }
