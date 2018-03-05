@@ -151,15 +151,6 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restart.
-        /// </summary>
-        public static string RestartVisualisation {
-            get {
-                return ResourceManager.GetString("RestartVisualisation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Selection Type.
         /// </summary>
         public static string SelectionType {
@@ -174,6 +165,15 @@ namespace ColorVisualisation.Properties {
         public static string StartVisualisation {
             get {
                 return ResourceManager.GetString("StartVisualisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        public static string StopVisualisation {
+            get {
+                return ResourceManager.GetString("StopVisualisation", resourceCulture);
             }
         }
         

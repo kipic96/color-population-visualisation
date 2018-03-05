@@ -147,14 +147,14 @@
   <data name="PauseVisualisation" xml:space="preserve">
     <value>Pause</value>
   </data>
-  <data name="RestartVisualisation" xml:space="preserve">
-    <value>Restart</value>
-  </data>
   <data name="SelectionType" xml:space="preserve">
     <value>Selection Type</value>
   </data>
   <data name="StartVisualisation" xml:space="preserve">
     <value>Start</value>
+  </data>
+  <data name="StopVisualisation" xml:space="preserve">
+    <value>Stop</value>
   </data>
   <data name="VisualisationSpeed" xml:space="preserve">
     <value>Visualisation Speed</value>
