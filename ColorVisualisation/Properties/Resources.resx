@@ -120,8 +120,17 @@
   <data name="AppTitle" xml:space="preserve">
     <value>Color Population Visualisation</value>
   </data>
+  <data name="BitmapHeight" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="BitmapWidth" xml:space="preserve">
+    <value>10</value>
+  </data>
   <data name="CrossoverType" xml:space="preserve">
     <value>Crossover Type</value>
+  </data>
+  <data name="DPI" xml:space="preserve">
+    <value>96</value>
   </data>
   <data name="MutationRate" xml:space="preserve">
     <value>Mutation Rate</value>
@@ -132,17 +141,20 @@
   <data name="NewVisualisation" xml:space="preserve">
     <value>New Visualisation</value>
   </data>
+  <data name="NumberOfValuesInPixel" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="PauseVisualisation" xml:space="preserve">
     <value>Pause</value>
-  </data>
-  <data name="RestartVisualisation" xml:space="preserve">
-    <value>Restart</value>
   </data>
   <data name="SelectionType" xml:space="preserve">
     <value>Selection Type</value>
   </data>
   <data name="StartVisualisation" xml:space="preserve">
     <value>Start</value>
+  </data>
+  <data name="StopVisualisation" xml:space="preserve">
+    <value>Stop</value>
   </data>
   <data name="VisualisationSpeed" xml:space="preserve">
     <value>Visualisation Speed</value>
