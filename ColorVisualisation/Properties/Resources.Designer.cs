@@ -70,11 +70,38 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 10.
+        /// </summary>
+        public static string BitmapHeight {
+            get {
+                return ResourceManager.GetString("BitmapHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 10.
+        /// </summary>
+        public static string BitmapWidth {
+            get {
+                return ResourceManager.GetString("BitmapWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crossover Type.
         /// </summary>
         public static string CrossoverType {
             get {
                 return ResourceManager.GetString("CrossoverType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 96.
+        /// </summary>
+        public static string DPI {
+            get {
+                return ResourceManager.GetString("DPI", resourceCulture);
             }
         }
         
@@ -106,20 +133,20 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 4.
+        /// </summary>
+        public static string NumberOfValuesInPixel {
+            get {
+                return ResourceManager.GetString("NumberOfValuesInPixel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pause.
         /// </summary>
         public static string PauseVisualisation {
             get {
                 return ResourceManager.GetString("PauseVisualisation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Restart.
-        /// </summary>
-        public static string RestartVisualisation {
-            get {
-                return ResourceManager.GetString("RestartVisualisation", resourceCulture);
             }
         }
         
@@ -138,6 +165,15 @@ namespace ColorVisualisation.Properties {
         public static string StartVisualisation {
             get {
                 return ResourceManager.GetString("StartVisualisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        public static string StopVisualisation {
+            get {
+                return ResourceManager.GetString("StopVisualisation", resourceCulture);
             }
         }
         

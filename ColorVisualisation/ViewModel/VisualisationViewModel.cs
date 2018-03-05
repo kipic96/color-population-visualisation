@@ -1,13 +1,36 @@
-﻿using ColorVisualisation.ViewModel.Base;
-using System.Windows;
+﻿using ColorVisualisation.Model;
+using ColorVisualisation.Model.Conversion;
+using ColorVisualisation.Model.Generator;
+using ColorVisualisation.ViewModel.Base;
+using System.ComponentModel;
+using System.Threading;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ColorVisualisation.ViewModel
 {
     class VisualisationViewModel : BaseViewModel
     {
+        private GeneticManager _geneticManager;
+
+        private BackgroundWorker _backgroundWorker;
+
+        private byte[,,] _rawPixels;
+        private byte[,,] RawPixels
+        {
+            get
+            {
+                return _rawPixels;
+            }
+            set
+            {
+                _rawPixels = value;
+                var converter = new BitmapConverter(_rawPixels);
+                PixelsImage = converter.ToBitmap();
+                IsBitmapReady = true;
+            }
+        }
+
         private WriteableBitmap _pixelsImage;
         public WriteableBitmap PixelsImage
         {
@@ -16,6 +39,49 @@ namespace ColorVisualisation.ViewModel
             {
                 _pixelsImage = value;
                 RaisePropertyChanged(nameof(PixelsImage));
+            }
+        }
+
+        private bool _isVisualisationEnabled = false;
+        public bool IsVisualisationEnabled
+        {
+            get
+            {
+                return _isVisualisationEnabled;
+            }
+            set
+            {
+                _isVisualisationEnabled = value;
+                IsVisualisationDisabled = !_isVisualisationEnabled;
+                RaisePropertyChanged(nameof(IsVisualisationEnabled));
+            }
+        }
+
+        private bool _isVisualisationDisabled = true;
+        public bool IsVisualisationDisabled
+        {
+            get
+            {
+                return _isVisualisationDisabled;
+            }
+            set
+            {
+                _isVisualisationDisabled = value;
+                RaisePropertyChanged(nameof(IsVisualisationDisabled));
+            }
+        }
+
+        private bool _isBitmapReady;
+        public bool IsBitmapReady
+        {
+            get
+            {
+                return _isVisualisationDisabled && _isBitmapReady;
+            }
+            set
+            {
+                _isBitmapReady = value;
+                RaisePropertyChanged(nameof(IsBitmapReady));
             }
         }
 
@@ -29,76 +95,98 @@ namespace ColorVisualisation.ViewModel
                     _newVisualisation = new NoParameterCommand(
                         () =>
                         {
-                            Visu();
+                            RawPixels = new BitmapGenerator().Generate();                            
                         });
                 }
                 return _newVisualisation;
             }
         }
 
-        private void Visu()
+        private ICommand _startVisualisation;
+        public ICommand StartVisualisation
         {
-            const int width = 240;
-            const int height = 240;
+            get
+            {
+                if (_startVisualisation == null)
+                {
+                    _startVisualisation = new NoParameterCommand(
+                        () =>
+                        {
+                            _geneticManager = new GeneticManager(RawPixels);
 
-            PixelsImage = new WriteableBitmap(
-                width, height, 96, 96, PixelFormats.Bgra32, null);
-            byte[,,] pixels = new byte[height, width, 4];
+                            IsVisualisationEnabled = true;
+                            _backgroundWorker = new BackgroundWorker();
+                            _backgroundWorker.WorkerReportsProgress = true;
+                            _backgroundWorker.WorkerSupportsCancellation = true;
+                            _backgroundWorker.DoWork += DoVisualisation;
+                            _backgroundWorker.ProgressChanged += OnNextGeneration;
+                            _backgroundWorker.RunWorkerAsync();
+                        });
+                }
+                return _startVisualisation;
+            }
+        }
 
-            // Clear to black.
+        private ICommand _pauseVisualisation;
+        public ICommand PauseVisualisation
+        {
+            get
+            {
+                if (_pauseVisualisation == null)
+                {
+                    _pauseVisualisation = new NoParameterCommand(
+                        () =>
+                        {
+                            IsVisualisationEnabled = false;
+                            IsBitmapReady = true;
+                            if (_backgroundWorker != null && _backgroundWorker.IsBusy)
+                                _backgroundWorker.CancelAsync();                            
+                        });
+                }
+                return _pauseVisualisation;
+            }
+        }
+
+        private void DoVisualisation(object sender, DoWorkEventArgs args)
+        {
+            while (true)
+            {
+                Thread.Sleep(400);
+                if (_backgroundWorker.CancellationPending == true)
+                {
+                    args.Cancel = true;
+                    return;
+                }   
+                else
+                {                    
+                    var newRawPixels = _geneticManager.NextGeneration();
+                    _backgroundWorker.ReportProgress(0, newRawPixels);
+                } 
+            }
+        }
+
+        private void OnNextGeneration(object sender, ProgressChangedEventArgs args)
+        {
+            RawPixels = (byte[,,])args.UserState;
+        }
+
+        private bool AreRawPixelsEmpty()
+        {
+            if (RawPixels == null)
+                return true;
+            int width = int.Parse(Properties.Resources.BitmapWidth);
+            int height = int.Parse(Properties.Resources.BitmapHeight);
+            int pixelValues = int.Parse(Properties.Resources.NumberOfValuesInPixel);
             for (int row = 0; row < height; row++)
             {
                 for (int col = 0; col < width; col++)
                 {
-                    for (int i = 0; i < 3; i++)
-                        pixels[row, col, i] = 0;
-                    pixels[row, col, 3] = 255;
+                    for (int i = 0; i < pixelValues; i++)
+                        if (RawPixels[row, col, i] != byte.MaxValue)
+                            return false;
                 }
             }
-
-            // Blue.
-            for (int row = 0; row < 80; row++)
-            {
-                for (int col = 0; col <= row; col++)
-                {
-                    pixels[row, col, 0] = 255;
-                }
-            }
-
-            // Green.
-            for (int row = 80; row < 160; row++)
-            {
-                for (int col = 0; col < 80; col++)
-                {
-                    pixels[row, col, 1] = 255;
-                }
-            }
-
-            // Red.
-            for (int row = 160; row < 240; row++)
-            {
-                for (int col = 0; col < 80; col++)
-                {
-                    pixels[row, col, 2] = 255;
-                }
-            }
-
-            // Copy the data into a one-dimensional array.
-            byte[] pixels1d = new byte[height * width * 4];
-            int index = 0;
-            for (int row = 0; row < height; row++)
-            {
-                for (int col = 0; col < width; col++)
-                {
-                    for (int i = 0; i < 4; i++)
-                        pixels1d[index++] = pixels[row, col, i];
-                }
-            }
-
-            // Update writeable bitmap with the colorArray to the image.
-            Int32Rect rect = new Int32Rect(0, 0, width, height);
-            int stride = 4 * width;
-            PixelsImage.WritePixels(rect, pixels1d, stride, 0);
+            return true;
         }
     }
 }
