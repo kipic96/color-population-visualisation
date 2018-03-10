@@ -56,9 +56,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Conversion\BitmapConverter.cs" />
+    <Compile Include="Model\Conversion\NumberConversion.cs" />
     <Compile Include="Model\Generator\BitmapGenerator.cs" />
     <Compile Include="Model\Extension\RandomExtension.cs" />
     <Compile Include="Model\GeneticManager.cs" />
+    <Compile Include="Model\Selection.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\NoParameterCommand.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
