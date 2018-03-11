@@ -15,6 +15,8 @@ namespace ColorVisualisation.Model
         {
             var gen = new BitmapGenerator();
             _rawPixels = gen.Generate();
+            var sel = new Selection(_rawPixels);
+            sel.Execute();
             return _rawPixels;
         }    
     }

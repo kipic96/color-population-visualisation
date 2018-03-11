@@ -9,8 +9,6 @@
         Title="Color Population Visualisation"
         Width="900"
         MinWidth="900"
-        MaxWidth="900"
-        MaxHeight="600"
         Height="600"
         MinHeight="600"
 >

@@ -148,7 +148,7 @@
     <value>Pause</value>
   </data>
   <data name="PixelsToSelectRatio" xml:space="preserve">
-    <value>0.5</value>
+    <value>0,5</value>
   </data>
   <data name="SelectionType" xml:space="preserve">
     <value>Selection Type</value>
