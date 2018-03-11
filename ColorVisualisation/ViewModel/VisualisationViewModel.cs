@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using ColorVisualisation.Properties;
 
 namespace ColorVisualisation.ViewModel
 {
@@ -14,6 +15,9 @@ namespace ColorVisualisation.ViewModel
         private GeneticManager _geneticManager;
 
         private BackgroundWorker _backgroundWorker;
+
+        private int _width = int.Parse(Resources.BitmapWidth);
+        private int _height = int.Parse(Resources.BitmapHeight);
 
         private byte[,,] _rawPixels;
         private byte[,,] RawPixels
@@ -95,7 +99,7 @@ namespace ColorVisualisation.ViewModel
                     _newVisualisation = new NoParameterCommand(
                         () =>
                         {
-                            RawPixels = new BitmapGenerator().Generate();                            
+                            RawPixels = new BitmapGenerator(_width, _width).Generate();                            
                         });
                 }
                 return _newVisualisation;
@@ -112,7 +116,7 @@ namespace ColorVisualisation.ViewModel
                     _startVisualisation = new NoParameterCommand(
                         () =>
                         {
-                            _geneticManager = new GeneticManager(RawPixels);
+                            _geneticManager = new GeneticManager(RawPixels, _width, _height);
 
                             IsVisualisationEnabled = true;
                             _backgroundWorker = new BackgroundWorker();
@@ -174,12 +178,11 @@ namespace ColorVisualisation.ViewModel
         {
             if (RawPixels == null)
                 return true;
-            int width = int.Parse(Properties.Resources.BitmapWidth);
-            int height = int.Parse(Properties.Resources.BitmapHeight);
+            
             int pixelValues = int.Parse(Properties.Resources.NumberOfValuesInPixel);
-            for (int row = 0; row < height; row++)
+            for (int row = 0; row < _height; row++)
             {
-                for (int col = 0; col < width; col++)
+                for (int col = 0; col < _width; col++)
                 {
                     for (int i = 0; i < pixelValues; i++)
                         if (RawPixels[row, col, i] != byte.MaxValue)

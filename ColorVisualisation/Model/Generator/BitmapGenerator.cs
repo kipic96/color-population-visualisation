@@ -6,10 +6,16 @@ namespace ColorVisualisation.Model.Generator
 {
     class BitmapGenerator
     {
-        private int _width = int.Parse(Properties.Resources.BitmapWidth);
-        private int _height = int.Parse(Properties.Resources.BitmapHeight);
+        private int _width;
+        private int _height;
         private int _pixelValues = int.Parse(Properties.Resources.NumberOfValuesInPixel);
         private int _dpi = int.Parse(Properties.Resources.DPI);
+
+        public BitmapGenerator(int width, int height)
+        {
+            _width = width;
+            _height = height;
+        }
 
         public byte[,,] Generate()
         {
