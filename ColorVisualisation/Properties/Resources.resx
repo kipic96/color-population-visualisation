@@ -126,6 +126,9 @@
   <data name="BitmapWidth" xml:space="preserve">
     <value>10</value>
   </data>
+  <data name="ChildrenCount" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="CrossoverType" xml:space="preserve">
     <value>Crossover Type</value>
   </data>

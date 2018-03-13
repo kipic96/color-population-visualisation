@@ -6,21 +6,18 @@ namespace ColorVisualisation.Model
     class Selection
     {
         private PixelContainer _pixelContainer;
-        private SelectionScoringTable _scoringTable;      
+        private SelectionScoringTable _scoringTable;
 
         private int _pixelsToSelect;
 
-        private double _pixelsToSelectRatio = 
-            double.Parse(Resources.PixelsToSelectRatio);
+        private double _pixelsToSelectRatio = double.Parse(Resources.PixelsToSelectRatio);
         private int _valuesInPixel = int.Parse(Resources.NumberOfValuesInPixel);
 
 
-        public Selection(PixelContainer pixelContainer)
+        public Selection(PixelContainer pixelContainer, int pixelsToSelect)
         {
             _pixelContainer = pixelContainer;
-            _pixelsToSelect = new NumberConversion().ToEvenNumber
-                ((int)(_pixelContainer.Width * _pixelContainer.Height
-                    / (_valuesInPixel * _pixelsToSelectRatio)));
+            _pixelsToSelect = pixelsToSelect;
             _scoringTable = new SelectionScoringTable();     
         }
 
@@ -33,6 +30,7 @@ namespace ColorVisualisation.Model
             _pixelContainer.OrderByRed();
             _pixelContainer.AddPointsToValues(_scoringTable);
             _pixelContainer.RemoveWeakPixels(_pixelsToSelect);
+            _pixelContainer.OrderAscending();
             return _pixelContainer;
         }
     }

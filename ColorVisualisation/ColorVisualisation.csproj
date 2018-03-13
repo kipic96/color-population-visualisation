@@ -58,11 +58,15 @@
     <Compile Include="Model\Conversion\BitmapConverter.cs" />
     <Compile Include="Model\Conversion\NumberConversion.cs" />
     <Compile Include="Model\Conversion\PixelsConverter.cs" />
+    <Compile Include="Model\CrossoverByAverage.cs" />
+    <Compile Include="Model\CrossoverStyle.cs" />
+    <Compile Include="Model\Extension\IListExtension.cs" />
     <Compile Include="Model\Generator\BitmapGenerator.cs" />
     <Compile Include="Model\Extension\RandomExtension.cs" />
     <Compile Include="Model\GeneticManager.cs" />
     <Compile Include="Model\Pixel.cs" />
     <Compile Include="Model\PixelContainer.cs" />
+    <Compile Include="Model\PixelPair.cs" />
     <Compile Include="Model\Selection.cs" />
     <Compile Include="Model\SelectionScoringTable.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />

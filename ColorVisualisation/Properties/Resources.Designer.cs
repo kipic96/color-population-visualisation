@@ -88,6 +88,15 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2.
+        /// </summary>
+        public static string ChildrenCount {
+            get {
+                return ResourceManager.GetString("ChildrenCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crossover Type.
         /// </summary>
         public static string CrossoverType {

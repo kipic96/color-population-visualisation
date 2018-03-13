@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ColorVisualisation.Model.Extension;
 
 namespace ColorVisualisation.Model
 {
@@ -25,7 +26,7 @@ namespace ColorVisualisation.Model
         {
             get
             {
-                return (int)Pixels.Average(pixel => pixel.Green);
+                return (int)Pixels.Average(pixel => pixel.Green );
             }
         }
         public int AverageRed
@@ -59,6 +60,11 @@ namespace ColorVisualisation.Model
         public void OrderByPoints()
         {
             Pixels = Pixels.OrderByDescending(pixel => pixel.RankingPoints).ToList();
+        }
+
+        public void Shuffle()
+        {
+            Pixels.Shuffle();
         }
 
         public void AddPointsToValues(SelectionScoringTable scoringTable)

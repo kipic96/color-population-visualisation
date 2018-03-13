@@ -165,7 +165,7 @@ namespace ColorVisualisation.ViewModel
         {
             while (true)
             {
-                Thread.Sleep(400);
+                Thread.Sleep(100);
                 if (_backgroundWorker.CancellationPending == true)
                 {
                     args.Cancel = true;
