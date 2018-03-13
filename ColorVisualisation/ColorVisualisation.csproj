@@ -60,7 +60,7 @@
     <Compile Include="Model\Generator\BitmapGenerator.cs" />
     <Compile Include="Model\Extension\RandomExtension.cs" />
     <Compile Include="Model\GeneticManager.cs" />
-    <Compile Include="Model\Helper\Pair.cs" />
+    <Compile Include="Model\Pixel.cs" />
     <Compile Include="Model\PixelContainer.cs" />
     <Compile Include="Model\Selection.cs" />
     <Compile Include="Model\SelectionScoringTable.cs" />
@@ -111,6 +111,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

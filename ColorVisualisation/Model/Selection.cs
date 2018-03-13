@@ -1,15 +1,12 @@
 ﻿using ColorVisualisation.Model.Conversion;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using ColorVisualisation.Properties;
-using System.Windows;
 
 namespace ColorVisualisation.Model
 {
     class Selection
     {
-        private PixelContainer _pixelContainer;        
+        private PixelContainer _pixelContainer;
+        private SelectionScoringTable _scoringTable;      
 
         private int _pixelsToSelect;
         private int[,] _selectedPixelsIndexes;
@@ -28,25 +25,19 @@ namespace ColorVisualisation.Model
             _allPixelsNumber = _width * _height;
             _pixelsToSelect = new NumberConversion().ToEvenNumber
                 ((int)(_allPixelsNumber / (_valuesInPixel * _pixelsToSelectRatio)));
-            _selectedPixelsIndexes = new int[_pixelsToSelect, 2];           
-            
+            _selectedPixelsIndexes = new int[_pixelsToSelect, 2];
+            _scoringTable = new SelectionScoringTable();     
         }
 
-        public int[,] Execute()
+        public PixelContainer Execute()
         {
-            SortPixels();
-
-            // TODO Selection algorithm
-            return _selectedPixelsIndexes;
-        }
-
-        private void SortPixels()
-        {
-            _pixelContainer.CreateRanking();
-            /*_bluePixels = _bluePixels.OrderBy(x => Math.Abs(x - _averageBlue)).ToArray();
-            _greenPixels.OrderBy(x => Math.Abs(x - _averageGreen)).ToArray();
-            _redPixels.OrderBy(x => Math.Abs(x - _averageRed)).ToArray();*/
-
+            _pixelContainer.OrderByBlue();
+            _pixelContainer.AddPointsToValues(_scoringTable);
+            _pixelContainer.OrderByGreen();
+            _pixelContainer.AddPointsToValues(_scoringTable);
+            _pixelContainer.OrderByRed();
+            _pixelContainer.AddPointsToValues(_scoringTable);
+            return _pixelContainer.GetTopPixels(_pixelsToSelect);
         }
     }
 }
