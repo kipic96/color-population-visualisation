@@ -9,23 +9,18 @@ namespace ColorVisualisation.Model
         private SelectionScoringTable _scoringTable;      
 
         private int _pixelsToSelect;
-        private int[,] _selectedPixelsIndexes;
 
-        int _allPixelsNumber;
         private double _pixelsToSelectRatio = 
             double.Parse(Resources.PixelsToSelectRatio);
         private int _valuesInPixel = int.Parse(Resources.NumberOfValuesInPixel);
-        private int _height = int.Parse(Resources.BitmapHeight);
-        private int _width = int.Parse(Resources.BitmapWidth);
 
 
         public Selection(PixelContainer pixelContainer)
         {
             _pixelContainer = pixelContainer;
-            _allPixelsNumber = _width * _height;
             _pixelsToSelect = new NumberConversion().ToEvenNumber
-                ((int)(_allPixelsNumber / (_valuesInPixel * _pixelsToSelectRatio)));
-            _selectedPixelsIndexes = new int[_pixelsToSelect, 2];
+                ((int)(_pixelContainer.Width * _pixelContainer.Height
+                    / (_valuesInPixel * _pixelsToSelectRatio)));
             _scoringTable = new SelectionScoringTable();     
         }
 
@@ -37,7 +32,8 @@ namespace ColorVisualisation.Model
             _pixelContainer.AddPointsToValues(_scoringTable);
             _pixelContainer.OrderByRed();
             _pixelContainer.AddPointsToValues(_scoringTable);
-            return _pixelContainer.GetTopPixels(_pixelsToSelect);
+            _pixelContainer.RemoveWeakPixels(_pixelsToSelect);
+            return _pixelContainer;
         }
     }
 }

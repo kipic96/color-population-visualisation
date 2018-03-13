@@ -4,18 +4,18 @@ namespace ColorVisualisation.Model
 {
     class GeneticManager
     {
-        public GeneticManager(byte[,,] rawPixels, int width, int height)
+        public GeneticManager(PixelContainer pixelContainer)
         {
-            _pixelContainer = new PixelContainer(rawPixels, width, height);
+            _pixelContainer = pixelContainer;
         }
 
         private PixelContainer _pixelContainer;
 
-        public byte[,,] NextGeneration()
+        public PixelContainer NextGeneration()
         {
             var sel = new Selection(_pixelContainer);
             sel.Execute();
-            return null; //TODO make a conversion from PixelContainer to _rawPixels;
+            return _pixelContainer; //TODO make a conversion from PixelContainer to _rawPixels;
         }    
     }
 }

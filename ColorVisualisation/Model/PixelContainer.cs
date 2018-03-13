@@ -6,13 +6,11 @@ namespace ColorVisualisation.Model
 {
     class PixelContainer
     {
-        private PixelContainer pixelContainer;
-
         public IList<Pixel> Pixels { get; set; }
 
-        public int Width { get; }
+        public int Width { get; internal set; }
 
-        public int Height { get; }
+        public int Height { get; internal set; }
         
         public int AllPixelsCount { get { return Width * Height; } }
 
@@ -36,37 +34,6 @@ namespace ColorVisualisation.Model
             {
                 return (int)Pixels.Average(pixel => pixel.Red);
             }
-        }
-
-        public PixelContainer(byte[,,] rawPixels, int width, int height)
-        {
-            Width = width;
-            Height = height;
-            Pixels = new List<Pixel>();
-            int pixelIndex = 0;
-            for (int row = 0; row < Height; row++)
-            {
-                for (int col = 0; col < Width; col++)
-                {
-                    Pixels.Add(new Pixel()
-                    {
-                        Blue = rawPixels[row, col, 0],
-                        Green = rawPixels[row, col, 1],
-                        Red = rawPixels[row, col, 2],
-                        Alpha = rawPixels[row, col, 3],
-                        IndexGlobal = pixelIndex,
-                        IndexRow = row,
-                        IndexColumn = col,
-                        RankingPoints = 0,
-                    });
-                    pixelIndex++;
-                }
-            }
-        }
-
-        public PixelContainer(PixelContainer pixelContainer)
-        {
-            this.pixelContainer = pixelContainer;
         }
 
         public void OrderAscending()
@@ -104,18 +71,23 @@ namespace ColorVisualisation.Model
             }
         }
 
-        public PixelContainer GetTopPixels(int pixelsToSelect)
+        public void RemoveWeakPixels(int pixelsToSelect)
         {
-            var topPixels = new PixelContainer(this);
-            topPixels.OrderByPoints();
-            topPixels.RemoveRange(pixelsToSelect);
-            return topPixels;         
-        }
-
-        private void RemoveRange(int pixelsToSelect)
-        {
-            // TODO select only best pixels
-            //Pixels = (Pixels as List<Pixel>).RemoveRange(pixelsToSelect - 1, Pixels.Count - pixelsToSelect);
+            OrderByPoints();
+            for (int pixelIndex = pixelsToSelect; pixelIndex < Pixels.Count; pixelIndex++)
+            {
+                Pixels[pixelIndex] = new Pixel()
+                {
+                    Blue = 0,
+                    Green = 0,
+                    Red = 0,
+                    Alpha = byte.MaxValue,
+                    IndexRow = Pixels[pixelIndex].IndexRow,
+                    IndexColumn = Pixels[pixelIndex].IndexColumn,
+                    IndexGlobal = Pixels[pixelIndex].IndexGlobal,
+                    RankingPoints = 0,
+                };
+            }            
         }
     }
 }

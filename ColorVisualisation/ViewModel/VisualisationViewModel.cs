@@ -19,17 +19,17 @@ namespace ColorVisualisation.ViewModel
         private int _width = int.Parse(Resources.BitmapWidth);
         private int _height = int.Parse(Resources.BitmapHeight);
 
-        private byte[,,] _rawPixels;
-        private byte[,,] RawPixels
+        private PixelContainer _pixels;
+        public PixelContainer PixelContainer
         {
             get
             {
-                return _rawPixels;
+                return _pixels;
             }
             set
             {
-                _rawPixels = value;
-                var converter = new BitmapConverter(_rawPixels);
+                _pixels = value;
+                var converter = new BitmapConverter(_pixels);
                 PixelsImage = converter.ToBitmap();
                 IsBitmapReady = true;
             }
@@ -45,6 +45,8 @@ namespace ColorVisualisation.ViewModel
                 RaisePropertyChanged(nameof(PixelsImage));
             }
         }
+
+        #region Bool Flags
 
         private bool _isVisualisationEnabled = false;
         public bool IsVisualisationEnabled
@@ -89,6 +91,10 @@ namespace ColorVisualisation.ViewModel
             }
         }
 
+        #endregion Bool Flags
+
+        #region Commands
+
         private ICommand _newVisualisation;
         public ICommand NewVisualisation
         {
@@ -99,7 +105,7 @@ namespace ColorVisualisation.ViewModel
                     _newVisualisation = new NoParameterCommand(
                         () =>
                         {
-                            RawPixels = new BitmapGenerator(_width, _width).Generate();                            
+                            PixelContainer = new PixelsGenerator(_width, _height).Generate();                            
                         });
                 }
                 return _newVisualisation;
@@ -116,12 +122,14 @@ namespace ColorVisualisation.ViewModel
                     _startVisualisation = new NoParameterCommand(
                         () =>
                         {
-                            _geneticManager = new GeneticManager(RawPixels, _width, _height);
+                            _geneticManager = new GeneticManager(PixelContainer);
 
                             IsVisualisationEnabled = true;
-                            _backgroundWorker = new BackgroundWorker();
-                            _backgroundWorker.WorkerReportsProgress = true;
-                            _backgroundWorker.WorkerSupportsCancellation = true;
+                            _backgroundWorker = new BackgroundWorker
+                            {
+                                WorkerReportsProgress = true,
+                                WorkerSupportsCancellation = true
+                            };
                             _backgroundWorker.DoWork += DoVisualisation;
                             _backgroundWorker.ProgressChanged += OnNextGeneration;
                             _backgroundWorker.RunWorkerAsync();
@@ -151,6 +159,8 @@ namespace ColorVisualisation.ViewModel
             }
         }
 
+        #endregion Commands
+
         private void DoVisualisation(object sender, DoWorkEventArgs args)
         {
             while (true)
@@ -163,33 +173,15 @@ namespace ColorVisualisation.ViewModel
                 }   
                 else
                 {                    
-                    var newRawPixels = _geneticManager.NextGeneration();
-                    _backgroundWorker.ReportProgress(0, newRawPixels);
+                    var newPixels = _geneticManager.NextGeneration();
+                    _backgroundWorker.ReportProgress(0, newPixels);
                 } 
             }
         }
 
         private void OnNextGeneration(object sender, ProgressChangedEventArgs args)
         {
-            RawPixels = (byte[,,])args.UserState;
-        }
-
-        private bool AreRawPixelsEmpty()
-        {
-            if (RawPixels == null)
-                return true;
-            
-            int pixelValues = int.Parse(Properties.Resources.NumberOfValuesInPixel);
-            for (int row = 0; row < _height; row++)
-            {
-                for (int col = 0; col < _width; col++)
-                {
-                    for (int i = 0; i < pixelValues; i++)
-                        if (RawPixels[row, col, i] != byte.MaxValue)
-                            return false;
-                }
-            }
-            return true;
+            PixelContainer = (PixelContainer)args.UserState;
         }
     }
 }

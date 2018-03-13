@@ -2,6 +2,9 @@
 {
     class SelectionScoringTable
     {
+        /// <summary>
+        /// Place counting started from 0.
+        /// </summary>
         public int GetScore(int place)
         {
             if (place >= _scoringTable.Length)

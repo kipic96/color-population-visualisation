@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\Conversion\BitmapConverter.cs" />
     <Compile Include="Model\Conversion\NumberConversion.cs" />
+    <Compile Include="Model\Conversion\PixelsConverter.cs" />
     <Compile Include="Model\Generator\BitmapGenerator.cs" />
     <Compile Include="Model\Extension\RandomExtension.cs" />
     <Compile Include="Model\GeneticManager.cs" />
