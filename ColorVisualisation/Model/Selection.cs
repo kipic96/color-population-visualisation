@@ -1,4 +1,5 @@
 ﻿using ColorVisualisation.Model.Conversion;
+using ColorVisualisation.Model.ScoringTable;
 using ColorVisualisation.Properties;
 
 namespace ColorVisualisation.Model
@@ -6,7 +7,7 @@ namespace ColorVisualisation.Model
     class Selection
     {
         private PixelContainer _pixelContainer;
-        private SelectionScoringTable _scoringTable;
+        private IScoringTable _scoringTable;
 
         private int _pixelsToSelect;
 
@@ -18,7 +19,7 @@ namespace ColorVisualisation.Model
         {
             _pixelContainer = pixelContainer;
             _pixelsToSelect = pixelsToSelect;
-            _scoringTable = new SelectionScoringTable();     
+            _scoringTable = new LinearScoringTable();     
         }
 
         public PixelContainer Execute()

@@ -3,10 +3,10 @@ using ColorVisualisation.Model.Conversion;
 using ColorVisualisation.Model.Generator;
 using ColorVisualisation.ViewModel.Base;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using ColorVisualisation.Properties;
+using System.Windows;
 
 namespace ColorVisualisation.ViewModel
 {
@@ -165,7 +165,6 @@ namespace ColorVisualisation.ViewModel
         {
             while (true)
             {
-                Thread.Sleep(100);
                 if (_backgroundWorker.CancellationPending == true)
                 {
                     args.Cancel = true;
@@ -175,6 +174,10 @@ namespace ColorVisualisation.ViewModel
                 {                    
                     var newPixels = _geneticManager.NextGeneration();
                     _backgroundWorker.ReportProgress(0, newPixels);
+                    if (newPixels.AreAllPixelsEqual())
+                    {
+                        MessageBox.Show("O kurwa działa");
+                    }
                 } 
             }
         }

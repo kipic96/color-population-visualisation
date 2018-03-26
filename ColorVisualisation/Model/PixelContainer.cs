@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ColorVisualisation.Model.Extension;
+using ColorVisualisation.Model.ScoringTable;
 
 namespace ColorVisualisation.Model
 {
@@ -62,24 +63,37 @@ namespace ColorVisualisation.Model
             Pixels = Pixels.OrderByDescending(pixel => pixel.RankingPoints).ToList();
         }
 
-        public void Shuffle()
+        public void OrderByPointsAscending()
         {
-            Pixels.Shuffle();
+            Pixels = Pixels.OrderBy(pixel => pixel.RankingPoints).ToList();
         }
 
-        public void AddPointsToValues(SelectionScoringTable scoringTable)
+        public void Shuffle()
+        {
+            //Pixels.Shuffle();
+        }
+
+        public void AddPointsToValues(IScoringTable scoringTable)
         {
             int pixelIndex = 0;
             foreach (var pixel in Pixels)
             {
-                pixel.RankingPoints += scoringTable.GetScore(pixelIndex);
+                pixel.RankingPoints += scoringTable.GetScore(Pixels.Count, pixelIndex);
                 pixelIndex++;
             }
+        }
+        public bool AreAllPixelsEqual()
+        {
+            var pis = Pixels.GroupBy(pixel => pixel.Blue == AverageBlue &&
+                                    pixel.Red == AverageRed &&
+                                    pixel.Green == AverageGreen).ToList();
+            var count = pis.Count();
+            return Pixels.Count == count;
         }
 
         public void RemoveWeakPixels(int pixelsToSelect)
         {
-            OrderByPoints();
+            OrderByPointsAscending();
             for (int pixelIndex = pixelsToSelect; pixelIndex < Pixels.Count; pixelIndex++)
             {
                 Pixels[pixelIndex] = new Pixel()

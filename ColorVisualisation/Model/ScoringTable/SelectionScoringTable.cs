@@ -1,11 +1,11 @@
-﻿namespace ColorVisualisation.Model
+﻿namespace ColorVisualisation.Model.ScoringTable
 {
-    class SelectionScoringTable
+    class SelectionScoringTable : IScoringTable
     {
         /// <summary>
         /// Place counting started from 0.
         /// </summary>
-        public int GetScore(int place)
+        public int GetScore(int allPosiblePlaces, int place)
         {
             if (place >= _scoringTable.Length)
                 return 0;

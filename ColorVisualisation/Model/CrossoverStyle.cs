@@ -1,4 +1,5 @@
 ﻿using ColorVisualisation.Properties;
+using System;
 using System.Collections.Generic;
 
 namespace ColorVisualisation.Model
@@ -24,14 +25,34 @@ namespace ColorVisualisation.Model
         {
             _pixelContainer.OrderByPoints();
             _pixelPairs = new List<PixelPair>();
+            var alreadySelectedPixelsIds = new List<int>();
+            var randomGenerator = new Random();
             int endingPixel = _pixelsToSelect;
-            for (int index = 0; index < endingPixel; index++, endingPixel--)
+            /*for (int index = 0; index < endingPixel; index++, endingPixel--)
             {
                 _pixelPairs.Add(new PixelPair()
                 {
                     First = _pixelContainer.Pixels[index],
                     Second = _pixelContainer.Pixels[endingPixel - 1]
                 });                
+            }*/            
+            for (int index = 0; index <= _pixelsToSelect - 1; index++)
+            {
+                if (!alreadySelectedPixelsIds.Contains(index))
+                {
+                    alreadySelectedPixelsIds.Add(index);
+                    int newIndex = randomGenerator.Next(index + 1, _pixelsToSelect);
+                    while (alreadySelectedPixelsIds.Contains(newIndex))
+                    {
+                        newIndex = randomGenerator.Next(index + 1, _pixelsToSelect);
+                    }
+                    alreadySelectedPixelsIds.Add(newIndex);
+                    _pixelPairs.Add(new PixelPair()
+                    {
+                        First = _pixelContainer.Pixels[index],
+                        Second = _pixelContainer.Pixels[newIndex]
+                    });
+                }
             }
             return;
         }
