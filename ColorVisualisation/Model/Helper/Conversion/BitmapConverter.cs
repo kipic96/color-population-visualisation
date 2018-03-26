@@ -1,8 +1,9 @@
-﻿using System.Windows;
+﻿using ColorVisualisation.Model.Entity;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace ColorVisualisation.Model.Conversion
+namespace ColorVisualisation.Model.Helper.Conversion
 {
     class BitmapConverter
     {
@@ -11,9 +12,9 @@ namespace ColorVisualisation.Model.Conversion
         private int _pixelValues = int.Parse(Properties.Resources.NumberOfValuesInPixel);
         private int _dpi = int.Parse(Properties.Resources.DPI);
 
-        private PixelContainer _pixels;
+        private PixelCollection _pixels;
 
-        public BitmapConverter(PixelContainer pixels)
+        public BitmapConverter(PixelCollection pixels)
         {
             _pixels = pixels;
             _width = pixels.Width;

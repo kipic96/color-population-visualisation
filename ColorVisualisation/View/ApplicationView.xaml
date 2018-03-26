@@ -7,10 +7,10 @@
         xmlns:properties="clr-namespace:ColorVisualisation.Properties"
         mc:Ignorable="d"
         Title="Color Population Visualisation"
-        Width="900"
-        MinWidth="900"
-        Height="600"
-        MinHeight="600"
+        Width="1000"
+        MinWidth="1000"
+        Height="800"
+        MinHeight="800"
 >
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
@@ -22,49 +22,61 @@
                 <RowDefinition Height="0.9*"/>
                 <RowDefinition Height="0.9*" />
                 <RowDefinition Height="0.9*" />
-                <RowDefinition Height="*" />
                 <RowDefinition Height="1.3*" />
                 <RowDefinition Height="1.3*" />
                 <RowDefinition Height="1.3*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="1.3*" />
+                <RowDefinition Height="1.3*" />
+                <RowDefinition Height="1.3*" />
                 <RowDefinition Height="0.5*" />
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Command="{Binding NewVisualisation}" IsEnabled="{Binding IsVisualisationDisabled}" Content="{x:Static properties:Resources.NewVisualisation}" Style="{StaticResource ButtonStyle}"/>
             <Button Grid.Row="1" Command="{Binding StartVisualisation}" IsEnabled="{Binding IsBitmapReady}" Content="{x:Static properties:Resources.StartVisualisation}" Style="{StaticResource ButtonStyle}"/>
             <Button Grid.Row="2" Command="{Binding PauseVisualisation}" IsEnabled="{Binding IsVisualisationEnabled}" Content="{x:Static properties:Resources.PauseVisualisation}"  Style="{StaticResource ButtonStyle}"/>
             <StackPanel Grid.Row="3" IsEnabled="{Binding IsVisualisationDisabled}">
-                <Label Content="{x:Static properties:Resources.VisualisationSpeed}" Style="{StaticResource LabelStyle}"/>
-                <Slider Style="{StaticResource SliderStyle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{x:Static properties:Resources.Height}" Style="{StaticResource LabelStyle}"/>
+                    <TextBlock Text="{Binding Height}" Style="{StaticResource TextBlockStyle}"/>
+                </StackPanel>                
+                <Slider Value="{Binding Height}" Minimum="2" Maximum="300" Style="{StaticResource SliderStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="4" IsEnabled="{Binding IsVisualisationDisabled}">
-                <Label Content="{x:Static properties:Resources.SelectionType}" Style="{StaticResource LabelStyle}"/>
-                <RadioButton Style="{StaticResource RadioButtonStyle}" Content="First sel" />
-                <!--IsChecked="{Binding SepiaType[0], Mode=TwoWay}"-->
-                <RadioButton Style="{StaticResource RadioButtonStyle}" Content="Second sel"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{x:Static properties:Resources.Width}" Style="{StaticResource LabelStyle}"/>
+                    <TextBlock Text="{Binding Width}" Style="{StaticResource TextBlockStyle}" Margin="85,5,0,0"/>
+                </StackPanel>
+                <Slider Value="{Binding Width}" Minimum="2" Maximum="300" Style="{StaticResource SliderStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="5" IsEnabled="{Binding IsVisualisationDisabled}">
-                <Label Content="{x:Static properties:Resources.CrossoverType}" Style="{StaticResource LabelStyle}"/>
-                <RadioButton Style="{StaticResource RadioButtonStyle}" Content="First cross" />
-                <RadioButton Style="{StaticResource RadioButtonStyle}" Content="Second cross"/>
+                <Label Content="{x:Static properties:Resources.ScoringType}" Style="{StaticResource LabelStyle}"/>
+                <ComboBox Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding ScoringTypes}"
+                          SelectedItem="{Binding CurrentScoringType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
             <StackPanel Grid.Row="6" IsEnabled="{Binding IsVisualisationDisabled}">
-                <Label Content="{x:Static properties:Resources.MutationType}" Style="{StaticResource LabelStyle}"/>
-                <RadioButton Style="{StaticResource RadioButtonStyle}" Content="First mut" />
-                <RadioButton Style="{StaticResource RadioButtonStyle}" Content="Second mut"/>
+                <Label Content="{x:Static properties:Resources.CrossoverType}" Style="{StaticResource LabelStyle}"/>
+                <ComboBox Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding CrossingTypes}"
+                          SelectedItem="{Binding CurrentCrossingType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
             <StackPanel Grid.Row="7" IsEnabled="{Binding IsVisualisationDisabled}">
+                <Label Content="{x:Static properties:Resources.MutationType}" Style="{StaticResource LabelStyle}"/>
+                <ComboBox Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding MutationTypes}"
+                          SelectedItem="{Binding CurrentMutationType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <StackPanel Grid.Row="8" IsEnabled="{Binding IsVisualisationDisabled}">
                 <Label Content="{x:Static properties:Resources.MutationRate}" Style="{StaticResource LabelStyle}"/>
                 <Slider Style="{StaticResource SliderStyle}"/>
             </StackPanel>
-
+            
         </Grid>
         <Grid Name="RightGrid" Grid.Column="1">
             <Image Source="{Binding PixelsImage}"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   Width="500"
-                   Height="500"
+                   Width="750"
+                   Height="750"
                    UseLayoutRounding="True"
+                   Margin="10"
                    RenderOptions.BitmapScalingMode="NearestNeighbor">
             </Image>
         </Grid>

@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon_256x256.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -55,22 +58,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Conversion\BitmapConverter.cs" />
-    <Compile Include="Model\Conversion\NumberConversion.cs" />
-    <Compile Include="Model\Conversion\PixelsConverter.cs" />
-    <Compile Include="Model\CrossoverByAverage.cs" />
-    <Compile Include="Model\CrossoverStyle.cs" />
-    <Compile Include="Model\Extension\IListExtension.cs" />
-    <Compile Include="Model\Generator\BitmapGenerator.cs" />
-    <Compile Include="Model\Extension\RandomExtension.cs" />
+    <Compile Include="Model\Crossing\CrossingByBit.cs" />
+    <Compile Include="Model\Crossing\CrossingFactory.cs" />
+    <Compile Include="Model\Helper\Conversion\BitmapConverter.cs" />
+    <Compile Include="Model\Helper\Conversion\NumberConversion.cs" />
+    <Compile Include="Model\Helper\Conversion\PixelsConverter.cs" />
+    <Compile Include="Model\Crossing\CrossingByAverage.cs" />
+    <Compile Include="Model\Crossing\BaseCrossing.cs" />
+    <Compile Include="Model\Enum\ScoringType.cs" />
+    <Compile Include="Model\Helper\Extension\IListExtension.cs" />
+    <Compile Include="Model\Helper\Generator\BitmapGenerator.cs" />
+    <Compile Include="Model\Helper\Extension\RandomExtension.cs" />
     <Compile Include="Model\GeneticManager.cs" />
-    <Compile Include="Model\ScoringTable\LinearScoringTable.cs" />
-    <Compile Include="Model\Pixel.cs" />
-    <Compile Include="Model\PixelContainer.cs" />
-    <Compile Include="Model\PixelPair.cs" />
-    <Compile Include="Model\ScoringTable\ScoringTable.cs" />
-    <Compile Include="Model\Selection.cs" />
-    <Compile Include="Model\ScoringTable\SelectionScoringTable.cs" />
+    <Compile Include="Model\Scoring\LinearScoringTable.cs" />
+    <Compile Include="Model\Entity\Pixel.cs" />
+    <Compile Include="Model\Entity\PixelCollection.cs" />
+    <Compile Include="Model\Entity\PixelPair.cs" />
+    <Compile Include="Model\Scoring\IScoringTable.cs" />
+    <Compile Include="Model\Scoring\ScoringFactory.cs" />
+    <Compile Include="Model\Selection\BaseSelection.cs" />
+    <Compile Include="Model\Scoring\AdjustedScoringTable.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\NoParameterCommand.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
@@ -118,7 +125,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icon_256x256.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

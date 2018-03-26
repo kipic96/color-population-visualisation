@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ColorVisualisation.Model.Extension
+namespace ColorVisualisation.Model.Helper.Extension
 {
     static class RandomExtension
     {

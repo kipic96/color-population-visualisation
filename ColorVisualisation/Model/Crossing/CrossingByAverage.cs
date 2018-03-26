@@ -1,14 +1,17 @@
 ﻿using System;
+using ColorVisualisation.Model.Entity;
+using ColorVisualisation.Properties;
 
-namespace ColorVisualisation.Model
+namespace ColorVisualisation.Model.Crossing
 {
-    class CrossoverByAverage : CrossoverStyle
+    class CrossingByAverage : BaseCrossing
     {
-        public CrossoverByAverage(PixelContainer pixelContainer, int pixelsToSelect, int howManyChildren) : base(pixelContainer, pixelsToSelect, howManyChildren) { }
+        public CrossingByAverage(PixelCollection pixelContainer, int pixelsToSelect, int howManyChildren) 
+            : base(pixelContainer, pixelsToSelect, howManyChildren) { }
 
-        public override PixelContainer Execute()
+        public override PixelCollection Execute()
         {
-            BondPixelToPairs();
+            BindPixelToPairs();
             PixelCrossing();
             return _pixelContainer;
         }

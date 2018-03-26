@@ -61,11 +61,38 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjusted.
+        /// </summary>
+        public static string AdjustedScoring {
+            get {
+                return ResourceManager.GetString("AdjustedScoring", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color Population Visualisation.
         /// </summary>
         public static string AppTitle {
             get {
                 return ResourceManager.GetString("AppTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average.
+        /// </summary>
+        public static string AverageCrossing {
+            get {
+                return ResourceManager.GetString("AverageCrossing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bit.
+        /// </summary>
+        public static string BitCrossing {
+            get {
+                return ResourceManager.GetString("BitCrossing", resourceCulture);
             }
         }
         
@@ -84,6 +111,15 @@ namespace ColorVisualisation.Properties {
         public static string BitmapWidth {
             get {
                 return ResourceManager.GetString("BitmapWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bit.
+        /// </summary>
+        public static string BitMutation {
+            get {
+                return ResourceManager.GetString("BitMutation", resourceCulture);
             }
         }
         
@@ -111,6 +147,60 @@ namespace ColorVisualisation.Properties {
         public static string DPI {
             get {
                 return ResourceManager.GetString("DPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crossing Type Not Good.
+        /// </summary>
+        public static string ErrorCrossingType {
+            get {
+                return ResourceManager.GetString("ErrorCrossingType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scoring Type Not Good.
+        /// </summary>
+        public static string ErrorScoringType {
+            get {
+                return ResourceManager.GetString("ErrorScoringType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height.
+        /// </summary>
+        public static string Height {
+            get {
+                return ResourceManager.GetString("Height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Children Per Parents.
+        /// </summary>
+        public static string HowManyChildren {
+            get {
+                return ResourceManager.GetString("HowManyChildren", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.
+        /// </summary>
+        public static string HowManyChildrenDefault {
+            get {
+                return ResourceManager.GetString("HowManyChildrenDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Linear.
+        /// </summary>
+        public static string LinearScoring {
+            get {
+                return ResourceManager.GetString("LinearScoring", resourceCulture);
             }
         }
         
@@ -160,11 +250,38 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pixels To Select.
+        /// </summary>
+        public static string PixelsToSelect {
+            get {
+                return ResourceManager.GetString("PixelsToSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 50.
+        /// </summary>
+        public static string PixelsToSelectDefault {
+            get {
+                return ResourceManager.GetString("PixelsToSelectDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,5.
         /// </summary>
         public static string PixelsToSelectRatio {
             get {
                 return ResourceManager.GetString("PixelsToSelectRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scoring Type.
+        /// </summary>
+        public static string ScoringType {
+            get {
+                return ResourceManager.GetString("ScoringType", resourceCulture);
             }
         }
         
@@ -196,11 +313,29 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string ValueMutation {
+            get {
+                return ResourceManager.GetString("ValueMutation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Visualisation Speed.
         /// </summary>
         public static string VisualisationSpeed {
             get {
                 return ResourceManager.GetString("VisualisationSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width.
+        /// </summary>
+        public static string Width {
+            get {
+                return ResourceManager.GetString("Width", resourceCulture);
             }
         }
     }

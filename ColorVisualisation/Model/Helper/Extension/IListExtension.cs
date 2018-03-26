@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ColorVisualisation.Model.Extension
+namespace ColorVisualisation.Model.Helper.Extension
 {
     public static class IListExtension
     {
