@@ -7,27 +7,16 @@ namespace ColorVisualisation.Model.Helper.Conversion
 {
     class BitmapConverter
     {
-        private int _width;
-        private int _height;
-        private int _pixelValues = int.Parse(Properties.Resources.NumberOfValuesInPixel);
-        private int _dpi = int.Parse(Properties.Resources.DPI);
+        private static int _pixelValues = int.Parse(Properties.Resources.NumberOfValuesInPixel);
+        private static int _dpi = int.Parse(Properties.Resources.DPI);
 
-        private PixelCollection _pixels;
-
-        public BitmapConverter(PixelCollection pixels)
-        {
-            _pixels = pixels;
-            _width = pixels.Width;
-            _height = pixels.Height;
-        }
-
-        public WriteableBitmap ToBitmap()
+        public static WriteableBitmap ToBitmap(PixelCollection pixels)
         {
             var newBitmap = new WriteableBitmap(
-                    _width, _height, _dpi, _dpi, PixelFormats.Bgra32, null);
-            byte[] pixels1d = _pixels.ToByteArray();
-            Int32Rect rect = new Int32Rect(0, 0, _width, _height);
-            int stride = _pixelValues * _width;
+                    pixels.Width, pixels.Height, _dpi, _dpi, PixelFormats.Bgra32, null);
+            byte[] pixels1d = pixels.ToByteArray();
+            Int32Rect rect = new Int32Rect(0, 0, pixels.Width, pixels.Height);
+            int stride = _pixelValues * pixels.Width;
             newBitmap.WritePixels(rect, pixels1d, stride, 0);
             return newBitmap;
         }

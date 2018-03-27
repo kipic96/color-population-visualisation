@@ -7,46 +7,35 @@ namespace ColorVisualisation.Model.Crossing
 {
     abstract class BaseCrossing
     {
-        protected PixelCollection _pixelContainer;
         protected IList<PixelPair> _pixelPairs;
-        protected int _pixelsToSelect;
-        protected int _howManyChildren;
-        protected int _valuesInPixel = int.Parse(Resources.NumberOfValuesInPixel);
 
-        public BaseCrossing(PixelCollection pixelContainer, int pixelsToSelect, int howManyChildren)
+        protected void BindPixelToPairs(PixelCollection pixelContainer, int pixelsToSelect)
         {
-            _pixelContainer = pixelContainer;
-            _pixelsToSelect = pixelsToSelect;
-            _howManyChildren = howManyChildren;
-        }
-
-        protected void BindPixelToPairs()
-        {
-            _pixelContainer.OrderByPoints();
+            pixelContainer.OrderByPoints();
             _pixelPairs = new List<PixelPair>();
             var alreadySelectedPixelsIds = new List<int>();
             var randomGenerator = new Random();
-            for (int index = 0; index <= _pixelsToSelect - 1; index++)
+            for (int index = 0; index <= pixelsToSelect - 1; index++)
             {
                 if (!alreadySelectedPixelsIds.Contains(index))
                 {
                     alreadySelectedPixelsIds.Add(index);
-                    int newIndex = randomGenerator.Next(index + 1, _pixelsToSelect);
+                    int newIndex = randomGenerator.Next(index + 1, pixelsToSelect);
                     while (alreadySelectedPixelsIds.Contains(newIndex))
                     {
-                        newIndex = randomGenerator.Next(index + 1, _pixelsToSelect);
+                        newIndex = randomGenerator.Next(index + 1, pixelsToSelect);
                     }
                     alreadySelectedPixelsIds.Add(newIndex);
                     _pixelPairs.Add(new PixelPair()
                     {
-                        First = _pixelContainer.Pixels[index],
-                        Second = _pixelContainer.Pixels[newIndex]
+                        First = pixelContainer.Pixels[index],
+                        Second = pixelContainer.Pixels[newIndex]
                     });
                 }
             }
             return;
         }
 
-        public abstract PixelCollection Execute();
+        public abstract PixelCollection Execute(PixelCollection pixelContainer, int pixelsToSelect, int howManyChildren);
     }
 }

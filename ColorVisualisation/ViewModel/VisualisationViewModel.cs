@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using ColorVisualisation.Properties;
-using System.Windows;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ColorVisualisation.Model.Helper.Generator;
@@ -12,6 +11,8 @@ using ColorVisualisation.Model.Helper.Conversion;
 using ColorVisualisation.Model.Entity;
 using ColorVisualisation.Model.Crossing;
 using ColorVisualisation.Model.Scoring;
+using System.Threading;
+using System.Windows;
 
 namespace ColorVisualisation.ViewModel
 {
@@ -20,8 +21,6 @@ namespace ColorVisualisation.ViewModel
         #region Properties And Fields
 
         private GeneticManager _geneticManager;
-
-        private BackgroundWorker _backgroundWorker;
 
         private int _valuesInPixel = int.Parse(Resources.NumberOfValuesInPixel);
 
@@ -32,8 +31,7 @@ namespace ColorVisualisation.ViewModel
             set
             {
                 _pixels = value;
-                var converter = new BitmapConverter(_pixels);
-                PixelsImage = converter.ToBitmap();
+                PixelsImage = BitmapConverter.ToBitmap(_pixels);
                 IsBitmapReady = true;
             }
         }
@@ -49,10 +47,22 @@ namespace ColorVisualisation.ViewModel
             }
         }
 
-        public int PixelsToSelect
+        private WriteableBitmap _averageColor;
+        public WriteableBitmap AverageColor
         {
-            get { return NumberConversion.ToEvenNumber((int)(Width * Height / 2)); }
+            get { return _averageColor; }
+            set
+            {
+                _averageColor = value;
+                RaisePropertyChanged(nameof(AverageColor));
+            }
         }
+
+        #region Threading 
+
+        private BackgroundWorker _backgroundWorker;
+
+        #endregion
 
         #region View Based Properties
 
@@ -65,6 +75,8 @@ namespace ColorVisualisation.ViewModel
                 _width = NumberConversion.ToEvenNumber(value);
                 IsSizeChanged = true;
                 RaisePropertyChanged(nameof(Width));
+                RaisePropertyChanged(nameof(AllPixelsCount));
+                RaisePropertyChanged(nameof(PixelsToSelect));
             }
         }
         private int _height = int.Parse(Resources.BitmapHeight);
@@ -76,6 +88,8 @@ namespace ColorVisualisation.ViewModel
                 _height = NumberConversion.ToEvenNumber(value);
                 IsSizeChanged = true;
                 RaisePropertyChanged(nameof(Height));
+                RaisePropertyChanged(nameof(AllPixelsCount));
+                RaisePropertyChanged(nameof(PixelsToSelect));
             }
         }
 
@@ -89,6 +103,15 @@ namespace ColorVisualisation.ViewModel
             }
         }
 
+        public int PixelsToSelect
+        {
+            get { return NumberConversion.ToEvenNumber((int)(Width * Height / 2)); }
+            set
+            {
+                RaisePropertyChanged(nameof(PixelsToSelect));
+            }
+        }
+
         private int _howManyChildren = int.Parse(Resources.HowManyChildrenDefault);
         public int HowManyChildren
         {
@@ -97,6 +120,17 @@ namespace ColorVisualisation.ViewModel
             {
                 _howManyChildren = value;
                 RaisePropertyChanged(nameof(HowManyChildren));
+            }
+        }
+
+        private int _turnsNumber;
+        public int TurnsNumber
+        {
+            get { return _turnsNumber; }
+            set
+            {
+                _turnsNumber = value;
+                RaisePropertyChanged(nameof(TurnsNumber));
             }
         }
 
@@ -226,11 +260,7 @@ namespace ColorVisualisation.ViewModel
                 if (_newVisualisation == null)
                 {
                     _newVisualisation = new NoParameterCommand(
-                        () =>
-                        {
-                            PixelCollection = PixelsGenerator.Generate(Width, Height);
-                            IsSizeChanged = false;
-                        });
+                        () => New());
                 }
                 return _newVisualisation;
             }
@@ -244,27 +274,7 @@ namespace ColorVisualisation.ViewModel
                 if (_startVisualisation == null)
                 {
                     _startVisualisation = new NoParameterCommand(
-                        () =>
-                        {
-                            _geneticManager = new GeneticManager()
-                            {
-                                PixelCollection = PixelCollection,
-                                ScoringTable = ScoringFactory.Create(CurrentScoringType),
-                                Crossing = CrossingFactory.Create(CurrentCrossingType,
-                                    PixelCollection, PixelsToSelect, HowManyChildren),  
-                                PixelsToSelect = PixelsToSelect,
-                            };
-
-                            IsVisualisationEnabled = true;
-                            _backgroundWorker = new BackgroundWorker
-                            {
-                                WorkerReportsProgress = true,
-                                WorkerSupportsCancellation = true
-                            };
-                            _backgroundWorker.DoWork += DoVisualisation;
-                            _backgroundWorker.ProgressChanged += OnNextGeneration;
-                            _backgroundWorker.RunWorkerAsync();
-                        });
+                        () => Start());
                 }
                 return _startVisualisation;
             }
@@ -278,13 +288,7 @@ namespace ColorVisualisation.ViewModel
                 if (_pauseVisualisation == null)
                 {
                     _pauseVisualisation = new NoParameterCommand(
-                        () =>
-                        {
-                            IsVisualisationEnabled = false;
-                            IsBitmapReady = true;
-                            if (_backgroundWorker != null && _backgroundWorker.IsBusy)
-                                _backgroundWorker.CancelAsync();                            
-                        });
+                        () => Pause());
                 }
                 return _pauseVisualisation;
             }
@@ -294,30 +298,90 @@ namespace ColorVisualisation.ViewModel
 
         #region Methods
 
+        private void New()
+        {
+            PixelCollection = PixelsGenerator.Generate(Width, Height);
+            IsSizeChanged = false;
+            TurnsNumber = 0;
+            UpdateAverageColor();
+        }
+
+        private void Start()
+        {
+            _geneticManager = new GeneticManager()
+            {
+                PixelCollection = PixelCollection,
+                ScoringTable = ScoringFactory.Create(CurrentScoringType),
+                Crossing = CrossingFactory.Create(CurrentCrossingType),
+                PixelsToSelect = PixelsToSelect,
+                HowManyChildren = HowManyChildren,
+            };
+
+            IsVisualisationEnabled = true;
+            _backgroundWorker = new BackgroundWorker
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
+            _backgroundWorker.DoWork += DoVisualisation;
+            _backgroundWorker.ProgressChanged += OnNextGeneration;
+            _backgroundWorker.RunWorkerAsync();
+        }
+
+        private void Pause()
+        {
+            IsVisualisationEnabled = false;
+            IsBitmapReady = true;
+            if (_backgroundWorker != null && _backgroundWorker.IsBusy)
+                _backgroundWorker.CancelAsync();
+        }        
+
+        private void UpdateAverageColor()
+        {
+            var newAveragePixel = new List<Pixel>();
+            newAveragePixel.Add(new Pixel()
+            {
+                Blue = PixelCollection.AverageBlue,
+                Red = PixelCollection.AverageRed,
+                Green = PixelCollection.AverageGreen,
+                Alpha = byte.MaxValue,
+            });
+            AverageColor = BitmapConverter.ToBitmap(new PixelCollection()
+            {
+                Height = 1,
+                Width = 1,
+                Pixels = newAveragePixel,
+            });
+    }
+
         private void DoVisualisation(object sender, DoWorkEventArgs args)
         {
             while (true)
             {
+                TurnsNumber++;
+                Thread.Sleep(15);
                 if (_backgroundWorker.CancellationPending == false)
                 {
                     var newPixels = _geneticManager.NextGeneration();
-                    _backgroundWorker.ReportProgress(0, newPixels);
+                    _backgroundWorker.ReportProgress(0, newPixels);                                       
                     if (newPixels.AreAllPixelsEqual())
                     {
-                        MessageBox.Show("O, koniec xD");
+                        MessageBox.Show(Resources.VisualisationEnded);
+                        Pause();
                     }
                 }
                 else
                 {
                     args.Cancel = true;
                     return;
-                }
+                }                
             }
         }
 
         private void OnNextGeneration(object sender, ProgressChangedEventArgs args)
         {
             PixelCollection = (PixelCollection)args.UserState;
+            UpdateAverageColor();
         }
 
         #endregion

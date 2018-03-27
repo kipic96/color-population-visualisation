@@ -84,7 +84,7 @@ namespace ColorVisualisation.Model.Entity
         }
         public bool AreAllPixelsEqual()
         {
-            var pis = Pixels.GroupBy(pixel => pixel.Blue == AverageBlue &&
+            var pis = Pixels.Where(pixel => pixel.Blue == AverageBlue &&
                                     pixel.Red == AverageRed &&
                                     pixel.Green == AverageGreen).ToList();
             var count = pis.Count();

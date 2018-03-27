@@ -1,27 +1,22 @@
-﻿using System;
-using ColorVisualisation.Model.Entity;
-using ColorVisualisation.Properties;
+﻿using ColorVisualisation.Model.Entity;
 
 namespace ColorVisualisation.Model.Crossing
 {
     class CrossingByAverage : BaseCrossing
     {
-        public CrossingByAverage(PixelCollection pixelContainer, int pixelsToSelect, int howManyChildren) 
-            : base(pixelContainer, pixelsToSelect, howManyChildren) { }
-
-        public override PixelCollection Execute()
+        public override PixelCollection Execute(PixelCollection pixelContainer, int pixelsToSelect, int howManyChildren)
         {
-            BindPixelToPairs();
-            PixelCrossing();
-            return _pixelContainer;
+            BindPixelToPairs(pixelContainer, pixelsToSelect);
+            PixelCrossing(pixelContainer, pixelsToSelect, howManyChildren);
+            return pixelContainer;
         }
 
-        private void PixelCrossing()
+        private void PixelCrossing(PixelCollection pixelContainer, int pixelsToSelect, int howManyChildren)
         {
-            int deadPixelIndex = _pixelsToSelect;
+            int deadPixelIndex = pixelsToSelect;
             foreach (var pixelPair in _pixelPairs)
             {
-                for (int i = 0; i < _howManyChildren; i++)
+                for (int i = 0; i < howManyChildren; i++)
                 {
                     var newPixel = new Pixel()
                     {
@@ -29,16 +24,16 @@ namespace ColorVisualisation.Model.Crossing
                         Green = Average(pixelPair.First.Green, pixelPair.Second.Green),
                         Red = Average(pixelPair.First.Red, pixelPair.Second.Red),
                         Alpha = byte.MaxValue,
-                        IndexColumn = _pixelContainer.Pixels[deadPixelIndex].IndexColumn,
-                        IndexRow = _pixelContainer.Pixels[deadPixelIndex].IndexRow,
-                        IndexGlobal = _pixelContainer.Pixels[deadPixelIndex].IndexGlobal,
+                        IndexColumn = pixelContainer.Pixels[deadPixelIndex].IndexColumn,
+                        IndexRow = pixelContainer.Pixels[deadPixelIndex].IndexRow,
+                        IndexGlobal = pixelContainer.Pixels[deadPixelIndex].IndexGlobal,
                         RankingPoints = 0,
                     };
-                    _pixelContainer.Pixels[deadPixelIndex] = newPixel;
+                    pixelContainer.Pixels[deadPixelIndex] = newPixel;
                     deadPixelIndex++;
                 }
             }
-            _pixelContainer.OrderAscending();
+            pixelContainer.OrderAscending();
             return;
         }
 

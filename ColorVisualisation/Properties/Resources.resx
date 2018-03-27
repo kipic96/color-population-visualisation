@@ -183,8 +183,8 @@
   <data name="ValueMutation" xml:space="preserve">
     <value>Value</value>
   </data>
-  <data name="VisualisationSpeed" xml:space="preserve">
-    <value>Visualisation Speed</value>
+  <data name="VisualisationEnded" xml:space="preserve">
+    <value>Visualisation Ended</value>
   </data>
   <data name="ErrorCrossingType" xml:space="preserve">
     <value>Crossing Type Not Good</value>
@@ -209,5 +209,14 @@
   </data>
   <data name="ErrorScoringType" xml:space="preserve">
     <value>Scoring Type Not Good</value>
+  </data>
+  <data name="AllPixelsCount" xml:space="preserve">
+    <value>All Pixels</value>
+  </data>
+  <data name="AverageColor" xml:space="preserve">
+    <value>Average Color</value>
+  </data>
+  <data name="CurrentTurn" xml:space="preserve">
+    <value>Current Turn</value>
   </data>
 </root>

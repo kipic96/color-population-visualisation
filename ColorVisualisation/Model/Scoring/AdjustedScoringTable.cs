@@ -9,7 +9,7 @@
         {
             if (place >= allPosiblePlaces)
                 return 0;
-            if (place >= allPosiblePlaces / 2)
+            if (place >= allPosiblePlaces / 2 || place >= _scoringTable.Length)
                 return 1;
             return _scoringTable[place];
         }

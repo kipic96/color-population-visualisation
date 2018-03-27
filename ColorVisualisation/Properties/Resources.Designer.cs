@@ -70,11 +70,29 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Pixels.
+        /// </summary>
+        public static string AllPixelsCount {
+            get {
+                return ResourceManager.GetString("AllPixelsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color Population Visualisation.
         /// </summary>
         public static string AppTitle {
             get {
                 return ResourceManager.GetString("AppTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average Color.
+        /// </summary>
+        public static string AverageColor {
+            get {
+                return ResourceManager.GetString("AverageColor", resourceCulture);
             }
         }
         
@@ -138,6 +156,15 @@ namespace ColorVisualisation.Properties {
         public static string CrossoverType {
             get {
                 return ResourceManager.GetString("CrossoverType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Turn.
+        /// </summary>
+        public static string CurrentTurn {
+            get {
+                return ResourceManager.GetString("CurrentTurn", resourceCulture);
             }
         }
         
@@ -322,11 +349,11 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visualisation Speed.
+        ///   Looks up a localized string similar to Visualisation Ended.
         /// </summary>
-        public static string VisualisationSpeed {
+        public static string VisualisationEnded {
             get {
-                return ResourceManager.GetString("VisualisationSpeed", resourceCulture);
+                return ResourceManager.GetString("VisualisationEnded", resourceCulture);
             }
         }
         
