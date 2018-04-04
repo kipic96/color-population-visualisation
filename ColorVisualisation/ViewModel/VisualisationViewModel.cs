@@ -117,9 +117,12 @@ namespace ColorVisualisation.ViewModel
         public int PixelsDeviation
         {
             get
-            { 
-                if (PixelCollection != null)
-                    return PixelCollection.Deviation;
+            {
+                lock (PixelCollection)
+                {
+                    if (PixelCollection != null)
+                        return PixelCollection.Deviation;
+                }
                 return 0;
             }
             set { RaisePropertyChanged(nameof(PixelsDeviation)); }
@@ -375,6 +378,7 @@ namespace ColorVisualisation.ViewModel
             _backgroundWorker.DoWork += DoVisualisation;
             _backgroundWorker.ProgressChanged += OnNextGeneration;
             _backgroundWorker.RunWorkerAsync();
+            
         }
 
         private void Pause()
@@ -388,23 +392,26 @@ namespace ColorVisualisation.ViewModel
 
         private void UpdateAverageColor()
         {
-            var newAveragePixel = new List<Pixel>
+            lock (PixelCollection)
             {
-                new Pixel()
+                var newAveragePixel = new List<Pixel>
                 {
-                    Blue = PixelCollection.AverageBlue,
-                    Red = PixelCollection.AverageRed,
-                    Green = PixelCollection.AverageGreen,
-                    Alpha = byte.MaxValue,
-                }
-            };
-            AverageColor = BitmapConverter.ToBitmap(new PixelCollection()
-            {
-                Height = 1,
-                Width = 1,
-                Pixels = newAveragePixel,
-            });
-    }
+                    new Pixel()
+                    {
+                        Blue = PixelCollection.AverageBlue,
+                        Red = PixelCollection.AverageRed,
+                        Green = PixelCollection.AverageGreen,
+                        Alpha = byte.MaxValue,
+                    }
+                };
+                AverageColor = BitmapConverter.ToBitmap(new PixelCollection()
+                {
+                    Height = 1,
+                    Width = 1,
+                    Pixels = newAveragePixel,
+                });
+            }
+        }
 
         private void DoVisualisation(object sender, DoWorkEventArgs args)
         {
@@ -415,7 +422,10 @@ namespace ColorVisualisation.ViewModel
                 if (_backgroundWorker.CancellationPending == false)
                 {
                     var newPixels = _geneticManager.NextGeneration();
-                    _backgroundWorker.ReportProgress(0, newPixels);                                       
+                    lock (PixelCollection)
+                    {                        
+                        _backgroundWorker.ReportProgress(0, newPixels);                        
+                    }
                     if (newPixels.AreAllPixelsEqual())
                     {
                         MessageBox.Show(Resources.VisualisationEnded);
