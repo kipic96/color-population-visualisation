@@ -9,7 +9,7 @@ namespace ColorVisualisation.Model.Crossing
     {
         protected IList<PixelPair> _pixelPairs;
 
-        protected void BindPixelToPairs(PixelCollection pixelContainer, int pixelsToSelect)
+        protected void RandomlyBindPixelToPairs(PixelCollection pixelContainer, int pixelsToSelect)
         {
             pixelContainer.OrderByPoints();
             _pixelPairs = new List<PixelPair>();

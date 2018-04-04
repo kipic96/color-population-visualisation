@@ -13,6 +13,8 @@ using ColorVisualisation.Model.Crossing;
 using ColorVisualisation.Model.Scoring;
 using System.Threading;
 using System.Windows;
+using ColorVisualisation.Model.Reporting;
+using Microsoft.Win32;
 
 namespace ColorVisualisation.ViewModel
 {
@@ -21,6 +23,8 @@ namespace ColorVisualisation.ViewModel
         #region Properties And Fields
 
         private GeneticManager _geneticManager;
+
+        private ReportingManager _reportingManager;
 
         private int _valuesInPixel = int.Parse(Resources.NumberOfValuesInPixel);
 
@@ -32,6 +36,7 @@ namespace ColorVisualisation.ViewModel
             {
                 _pixels = value;
                 PixelsImage = BitmapConverter.ToBitmap(_pixels);
+                RaisePropertyChanged(nameof(PixelsDeviation));
                 IsBitmapReady = true;
             }
         }
@@ -106,10 +111,18 @@ namespace ColorVisualisation.ViewModel
         public int PixelsToSelect
         {
             get { return NumberConversion.ToEvenNumber((int)(Width * Height / 2)); }
-            set
-            {
-                RaisePropertyChanged(nameof(PixelsToSelect));
+            set { RaisePropertyChanged(nameof(PixelsToSelect)); }
+        }
+
+        public int PixelsDeviation
+        {
+            get
+            { 
+                if (PixelCollection != null)
+                    return PixelCollection.Deviation;
+                return 0;
             }
+            set { RaisePropertyChanged(nameof(PixelsDeviation)); }
         }
 
         private int _howManyChildren = int.Parse(Resources.HowManyChildrenDefault);
@@ -164,6 +177,17 @@ namespace ColorVisualisation.ViewModel
             {
                 _currentCrossingType = value;
                 RaisePropertyChanged(nameof(CurrentCrossingType));
+            }
+        }
+
+        private int _currentMutationRate = 0;
+        public int CurrentMutationRate
+        {
+            get { return _currentMutationRate; }
+            set
+            {
+                _currentMutationRate = value;
+                RaisePropertyChanged(nameof(CurrentMutationRate));
             }
         }
 
@@ -294,6 +318,20 @@ namespace ColorVisualisation.ViewModel
             }
         }
 
+        private ICommand _generateReport;
+        public ICommand GenerateReport
+        {
+            get
+            {
+                if (_generateReport == null)
+                {
+                    _generateReport = new NoParameterCommand(
+                        () => _reportingManager.ShowDialogAndSave());
+                }
+                return _generateReport;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -304,6 +342,17 @@ namespace ColorVisualisation.ViewModel
             IsSizeChanged = false;
             TurnsNumber = 0;
             UpdateAverageColor();
+            _reportingManager = new ReportingManager()
+            {
+                Height = Height,
+                Width = Width,
+                AllPixels = AllPixelsCount,
+                ScoringType = CurrentScoringType,
+                MutationType = CurrentMutationType,
+                CrossoverType = CurrentCrossingType,
+                MutationRate = CurrentMutationRate,
+            };
+            _reportingManager.TurnReport(1, PixelsDeviation);
         }
 
         private void Start()
@@ -334,18 +383,21 @@ namespace ColorVisualisation.ViewModel
             IsBitmapReady = true;
             if (_backgroundWorker != null && _backgroundWorker.IsBusy)
                 _backgroundWorker.CancelAsync();
+            _reportingManager.TurnReport(TurnsNumber, PixelsDeviation);
         }        
 
         private void UpdateAverageColor()
         {
-            var newAveragePixel = new List<Pixel>();
-            newAveragePixel.Add(new Pixel()
+            var newAveragePixel = new List<Pixel>
             {
-                Blue = PixelCollection.AverageBlue,
-                Red = PixelCollection.AverageRed,
-                Green = PixelCollection.AverageGreen,
-                Alpha = byte.MaxValue,
-            });
+                new Pixel()
+                {
+                    Blue = PixelCollection.AverageBlue,
+                    Red = PixelCollection.AverageRed,
+                    Green = PixelCollection.AverageGreen,
+                    Alpha = byte.MaxValue,
+                }
+            };
             AverageColor = BitmapConverter.ToBitmap(new PixelCollection()
             {
                 Height = 1,
@@ -359,7 +411,7 @@ namespace ColorVisualisation.ViewModel
             while (true)
             {
                 TurnsNumber++;
-                Thread.Sleep(15);
+                Thread.Sleep(20);
                 if (_backgroundWorker.CancellationPending == false)
                 {
                     var newPixels = _geneticManager.NextGeneration();
@@ -382,6 +434,7 @@ namespace ColorVisualisation.ViewModel
         {
             PixelCollection = (PixelCollection)args.UserState;
             UpdateAverageColor();
+            _reportingManager.TurnReport(TurnsNumber, PixelsDeviation);
         }
 
         #endregion

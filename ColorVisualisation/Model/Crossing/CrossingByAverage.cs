@@ -6,7 +6,7 @@ namespace ColorVisualisation.Model.Crossing
     {
         public override PixelCollection Execute(PixelCollection pixelContainer, int pixelsToSelect, int howManyChildren)
         {
-            BindPixelToPairs(pixelContainer, pixelsToSelect);
+            RandomlyBindPixelToPairs(pixelContainer, pixelsToSelect);
             PixelCrossing(pixelContainer, pixelsToSelect, howManyChildren);
             return pixelContainer;
         }

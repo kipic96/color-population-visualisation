@@ -66,10 +66,10 @@
     <Compile Include="Model\Crossing\CrossingByAverage.cs" />
     <Compile Include="Model\Crossing\BaseCrossing.cs" />
     <Compile Include="Model\Enum\ScoringType.cs" />
-    <Compile Include="Model\Helper\Extension\IListExtension.cs" />
     <Compile Include="Model\Helper\Generator\BitmapGenerator.cs" />
     <Compile Include="Model\Helper\Extension\RandomExtension.cs" />
     <Compile Include="Model\GeneticManager.cs" />
+    <Compile Include="Model\Reporting\ReportingManager.cs" />
     <Compile Include="Model\Scoring\LinearScoringTable.cs" />
     <Compile Include="Model\Entity\Pixel.cs" />
     <Compile Include="Model\Entity\PixelCollection.cs" />

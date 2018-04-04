@@ -1,5 +1,4 @@
-﻿using ColorVisualisation.Properties;
-using ColorVisualisation.Model.Scoring;
+﻿using ColorVisualisation.Model.Scoring;
 using ColorVisualisation.Model.Entity;
 using ColorVisualisation.Model.Crossing;
 using ColorVisualisation.Model.Selection;

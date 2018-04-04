@@ -169,6 +169,33 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string DialogDefaultFileName {
+            get {
+                return ResourceManager.GetString("DialogDefaultFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .txt.
+        /// </summary>
+        public static string DialogExtension {
+            get {
+                return ResourceManager.GetString("DialogExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to txt files (.txt)|*.txt.
+        /// </summary>
+        public static string DialogFilter {
+            get {
+                return ResourceManager.GetString("DialogFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 96.
         /// </summary>
         public static string DPI {
@@ -192,6 +219,15 @@ namespace ColorVisualisation.Properties {
         public static string ErrorScoringType {
             get {
                 return ResourceManager.GetString("ErrorScoringType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Report.
+        /// </summary>
+        public static string GenerateReport {
+            get {
+                return ResourceManager.GetString("GenerateReport", resourceCulture);
             }
         }
         
@@ -273,6 +309,15 @@ namespace ColorVisualisation.Properties {
         public static string PauseVisualisation {
             get {
                 return ResourceManager.GetString("PauseVisualisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pixels Deviation.
+        /// </summary>
+        public static string PixelsDeviation {
+            get {
+                return ResourceManager.GetString("PixelsDeviation", resourceCulture);
             }
         }
         

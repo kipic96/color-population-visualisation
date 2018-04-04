@@ -27,7 +27,7 @@ namespace ColorVisualisation.Model.Entity
         {
             get
             {
-                return (int)Pixels.Average(pixel => pixel.Green );
+                return (int)Pixels.Average(pixel => pixel.Green);
             }
         }
         public int AverageRed
@@ -38,6 +38,17 @@ namespace ColorVisualisation.Model.Entity
             }
         }
 
+        public int Deviation
+        {
+            get
+            {
+                int averageBlue = AverageBlue;
+                int averageRed = AverageRed;
+                int averageGreen = AverageGreen;
+                return Pixels.Sum(pixel => Math.Abs(pixel.Blue - averageBlue) + Math.Abs(pixel.Red - averageRed) + Math.Abs(pixel.Green - averageGreen));
+            }
+        }
+
         public void OrderAscending()
         {
             Pixels = Pixels.OrderBy(pixel => pixel.IndexGlobal).ToList();
@@ -45,17 +56,20 @@ namespace ColorVisualisation.Model.Entity
 
         public void OrderByBlue()
         {
-            Pixels = Pixels.OrderBy(pixel => Math.Abs(pixel.Blue - AverageBlue)).ToList();
+            int averageBlue = AverageBlue;
+            Pixels = Pixels.OrderBy(pixel => Math.Abs(pixel.Blue - averageBlue)).ToList();
         }
 
         public void OrderByGreen()
         {
-            Pixels = Pixels.OrderBy(pixel => Math.Abs(pixel.Green - AverageGreen)).ToList();
+            int averageGreen = AverageGreen;
+            Pixels = Pixels.OrderBy(pixel => Math.Abs(pixel.Green - averageGreen)).ToList();
         }
 
         public void OrderByRed()
         {
-            Pixels = Pixels.OrderBy(pixel => Math.Abs(pixel.Red - AverageRed)).ToList();
+            int averageRed = AverageRed;
+            Pixels = Pixels.OrderBy(pixel => Math.Abs(pixel.Red - averageRed)).ToList();
         }
 
         public void OrderByPoints()
@@ -66,11 +80,6 @@ namespace ColorVisualisation.Model.Entity
         public void OrderByPointsAscending()
         {
             Pixels = Pixels.OrderBy(pixel => pixel.RankingPoints).ToList();
-        }
-
-        public void Shuffle()
-        {
-            Pixels.Shuffle();
         }
 
         public void AddPointsToValues(IScoringTable scoringTable)
@@ -84,9 +93,12 @@ namespace ColorVisualisation.Model.Entity
         }
         public bool AreAllPixelsEqual()
         {
-            var pis = Pixels.Where(pixel => pixel.Blue == AverageBlue &&
-                                    pixel.Red == AverageRed &&
-                                    pixel.Green == AverageGreen).ToList();
+            int averageBlue = AverageBlue;
+            int averageRed = AverageRed;
+            int averageGreen = AverageGreen;
+            var pis = Pixels.Where(pixel => pixel.Blue == averageBlue &&
+                                    pixel.Red == averageRed &&
+                                    pixel.Green == averageGreen).ToList();
             var count = pis.Count();
             return Pixels.Count == count;
         }

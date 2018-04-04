@@ -219,4 +219,19 @@
   <data name="CurrentTurn" xml:space="preserve">
     <value>Current Turn</value>
   </data>
+  <data name="PixelsDeviation" xml:space="preserve">
+    <value>Pixels Deviation</value>
+  </data>
+  <data name="DialogDefaultFileName" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="DialogExtension" xml:space="preserve">
+    <value>.txt</value>
+  </data>
+  <data name="DialogFilter" xml:space="preserve">
+    <value>txt files (.txt)|*.txt</value>
+  </data>
+  <data name="GenerateReport" xml:space="preserve">
+    <value>Generate Report</value>
+  </data>
 </root>
