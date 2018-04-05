@@ -1,40 +1,76 @@
-﻿using System;
+﻿using ColorVisualisation.Model.Scoring;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ColorVisualisation.Model.Scoring;
-using ColorVisualisation.Model.Helper.Extension;
 
 namespace ColorVisualisation.Model.Entity
 {
-    class PixelCollection
+    class PixelCollection : IEnumerable<Pixel>
     {
-        public IList<Pixel> Pixels { get; set; }
+        private IList<Pixel> _pixels;
+
+        public Pixel this[int key]
+        {
+            get { lock (_pixels) { return _pixels[key]; } }
+            set { lock (_pixels) { _pixels[key] = value; } }
+        }
+
+        public IEnumerator<Pixel> GetEnumerator()
+        {
+            lock (_pixels)
+            {
+                return _pixels.GetEnumerator();
+            }            
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            lock (_pixels)
+            {
+                return _pixels.GetEnumerator();
+            }            
+        }
+
+        public PixelCollection(IList<Pixel> pixels)
+        {
+            _pixels = pixels;
+        }
 
         public int Width { get; internal set; }
 
         public int Height { get; internal set; }
         
-        public int AllPixelsCount { get { return Width * Height; } }
+        public int AllPixelsCount { get { lock (this) { return Width * Height; } } }
 
         public int AverageBlue
         {
             get
             {
-                return (int)Pixels.Average(pixel => pixel.Blue);
+                lock (_pixels)
+                {
+                    return (int)_pixels.Average(pixel => pixel.Blue);
+                }
             }
         }
         public int AverageGreen
         {
             get
             {
-                return (int)Pixels.Average(pixel => pixel.Green);
+                lock (_pixels)
+                {
+                    return (int)_pixels.Average(pixel => pixel.Green);
+                }
             }
         }
         public int AverageRed
         {
             get
             {
-                return (int)Pixels.Average(pixel => pixel.Red);
+                lock (_pixels)
+                {
+                    return (int)_pixels.Average(pixel => pixel.Red);
+                }
             }
         }
 
@@ -42,84 +78,118 @@ namespace ColorVisualisation.Model.Entity
         {
             get
             {
-                int averageBlue = AverageBlue;
-                int averageRed = AverageRed;
-                int averageGreen = AverageGreen;
-                return Pixels.Sum(pixel => Math.Abs(pixel.Blue - averageBlue) + Math.Abs(pixel.Red - averageRed) + Math.Abs(pixel.Green - averageGreen));
+                lock (_pixels)
+                {
+                    int averageBlue = AverageBlue;
+                    int averageRed = AverageRed;
+                    int averageGreen = AverageGreen;
+                    return _pixels.Sum(pixel => 
+                        Math.Abs(pixel.Blue - AverageBlue) + 
+                        Math.Abs(pixel.Red - AverageRed) + 
+                        Math.Abs(pixel.Green - AverageGreen));
+                }
             }
         }
 
         public void OrderAscending()
         {
-            Pixels = Pixels.OrderBy(pixel => pixel.IndexGlobal).ToList();
+            lock (_pixels)
+            {
+                _pixels = _pixels.OrderBy(pixel => pixel.IndexGlobal).ToList();
+            }            
         }
 
         public void OrderByBlue()
         {
-            int averageBlue = AverageBlue;
-            Pixels = Pixels.OrderBy(pixel => Math.Abs(pixel.Blue - averageBlue)).ToList();
+            lock (_pixels)
+            {
+                int averageBlue = AverageBlue;
+                _pixels = _pixels.OrderBy(pixel => Math.Abs(pixel.Blue - averageBlue)).ToList();
+            }            
         }
 
         public void OrderByGreen()
         {
-            int averageGreen = AverageGreen;
-            Pixels = Pixels.OrderBy(pixel => Math.Abs(pixel.Green - averageGreen)).ToList();
+            lock (_pixels)
+            {
+                int averageGreen = AverageGreen;
+                _pixels = _pixels.OrderBy(pixel => Math.Abs(pixel.Green - averageGreen)).ToList();
+            }            
         }
 
         public void OrderByRed()
         {
-            int averageRed = AverageRed;
-            Pixels = Pixels.OrderBy(pixel => Math.Abs(pixel.Red - averageRed)).ToList();
+            lock (_pixels)
+            {
+                int averageRed = AverageRed;
+                _pixels = _pixels.OrderBy(pixel => Math.Abs(pixel.Red - averageRed)).ToList();
+            }            
         }
 
         public void OrderByPoints()
         {
-            Pixels = Pixels.OrderByDescending(pixel => pixel.RankingPoints).ToList();
+            lock (_pixels)
+            {
+                _pixels = _pixels.OrderByDescending(pixel => pixel.RankingPoints).ToList();
+            }            
         }
 
         public void OrderByPointsAscending()
         {
-            Pixels = Pixels.OrderBy(pixel => pixel.RankingPoints).ToList();
+            lock (_pixels)
+            {
+                _pixels = _pixels.OrderBy(pixel => pixel.RankingPoints).ToList();
+            }            
         }
 
         public void AddPointsToValues(IScoringTable scoringTable)
         {
-            int pixelIndex = 0;
-            foreach (var pixel in Pixels)
+            lock (_pixels)
             {
-                pixel.RankingPoints += scoringTable.GetScore(Pixels.Count, pixelIndex);
-                pixelIndex++;
-            }
+                int pixelIndex = 0;
+                foreach (var pixel in _pixels)
+                {
+                    pixel.RankingPoints += scoringTable.GetScore(_pixels.Count, pixelIndex);
+                    pixelIndex++;
+                }
+            }            
         }
         public bool AreAllPixelsEqual()
         {
-            int averageBlue = AverageBlue;
-            int averageRed = AverageRed;
-            int averageGreen = AverageGreen;
-            var pis = Pixels.Where(pixel => pixel.Blue == averageBlue &&
-                                    pixel.Red == averageRed &&
-                                    pixel.Green == averageGreen).ToList();
-            var count = pis.Count();
-            return Pixels.Count == count;
+            lock (_pixels)
+            {
+                int averageBlue = AverageBlue;
+                int averageRed = AverageRed;
+                int averageGreen = AverageGreen;
+                var equalPixelsCount = _pixels.Where(pixel => pixel.Blue == averageBlue &&
+                                        pixel.Red == averageRed &&
+                                        pixel.Green == averageGreen).ToList().Count();
+                return _pixels.Count == equalPixelsCount;
+            }            
         }
 
         public void RemoveWeakPixels(int pixelsToSelect)
         {
-            OrderByPointsAscending();
-            for (int pixelIndex = pixelsToSelect; pixelIndex < Pixels.Count; pixelIndex++)
+            lock (_pixels)
             {
-                Pixels[pixelIndex] = new Pixel()
+                OrderByPointsAscending();
+                for (int pixelIndex = pixelsToSelect; pixelIndex < _pixels.Count; pixelIndex++)
                 {
-                    Blue = 0,
-                    Green = 0,
-                    Red = 0,
-                    Alpha = byte.MaxValue,
-                    IndexRow = Pixels[pixelIndex].IndexRow,
-                    IndexColumn = Pixels[pixelIndex].IndexColumn,
-                    IndexGlobal = Pixels[pixelIndex].IndexGlobal,
-                    RankingPoints = 0,
-                };
-            }            
+                    _pixels[pixelIndex] = new Pixel()
+                    {
+                        Blue = 0,
+                        Green = 0,
+                        Red = 0,
+                        Alpha = byte.MaxValue,
+                        IndexRow = _pixels[pixelIndex].IndexRow,
+                        IndexColumn = _pixels[pixelIndex].IndexColumn,
+                        IndexGlobal = _pixels[pixelIndex].IndexGlobal,
+                        RankingPoints = 0,
+                    };
+                }
+            }                       
         }
+
+        
     }
 }

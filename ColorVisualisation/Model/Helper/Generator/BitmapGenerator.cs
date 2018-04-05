@@ -32,9 +32,8 @@ namespace ColorVisualisation.Model.Helper.Generator
                     pixelIndex++;
                 }
             }
-            var readyCollection = new PixelCollection()
+            var readyCollection = new PixelCollection(generatedPixels)
             {
-                Pixels = generatedPixels,
                 Width = Width,
                 Height = Height
             };

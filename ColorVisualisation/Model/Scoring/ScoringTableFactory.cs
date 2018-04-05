@@ -3,7 +3,7 @@ using System;
 
 namespace ColorVisualisation.Model.Scoring
 {
-    class ScoringFactory
+    class ScoringTableFactory
     {
         public static IScoringTable Create(string scoringType)
         {

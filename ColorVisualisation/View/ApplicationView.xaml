@@ -66,8 +66,11 @@
                           SelectedItem="{Binding CurrentMutationType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
             <StackPanel Grid.Row="9" IsEnabled="{Binding IsVisualisationDisabled}">
-                <Label Content="{x:Static properties:Resources.MutationRate}" Style="{StaticResource LabelStyle}"/>
-                <Slider Style="{StaticResource SliderStyle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{x:Static properties:Resources.MutationRate}" Style="{StaticResource LabelStyle}"/>
+                    <TextBlock Text="{Binding CurrentMutationRate}" Style="{StaticResource TextBlockStyle}" Margin="35,5,0,0"/>
+                </StackPanel>
+                <Slider Value="{Binding CurrentMutationRate}" Style="{StaticResource SliderStyle}" Minimum="0" Maximum="20"/>
             </StackPanel>
             
         </Grid>

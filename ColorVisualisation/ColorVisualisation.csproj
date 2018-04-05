@@ -58,24 +58,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Crossing\CrossingByBit.cs" />
+    <Compile Include="Model\Crossing\BitCrossing.cs" />
     <Compile Include="Model\Crossing\CrossingFactory.cs" />
     <Compile Include="Model\Helper\Conversion\BitmapConverter.cs" />
     <Compile Include="Model\Helper\Conversion\NumberConversion.cs" />
     <Compile Include="Model\Helper\Conversion\PixelsConverter.cs" />
-    <Compile Include="Model\Crossing\CrossingByAverage.cs" />
+    <Compile Include="Model\Crossing\AverageCrossing.cs" />
     <Compile Include="Model\Crossing\BaseCrossing.cs" />
-    <Compile Include="Model\Enum\ScoringType.cs" />
+    <Compile Include="Model\Helper\Generator\BitArrayGenerator.cs" />
     <Compile Include="Model\Helper\Generator\BitmapGenerator.cs" />
     <Compile Include="Model\Helper\Extension\RandomExtension.cs" />
     <Compile Include="Model\GeneticManager.cs" />
+    <Compile Include="Model\Mutation\BaseMutation.cs" />
+    <Compile Include="Model\Mutation\BitMutation.cs" />
+    <Compile Include="Model\Mutation\MutationFactory.cs" />
+    <Compile Include="Model\Mutation\ValueMutation.cs" />
     <Compile Include="Model\Reporting\ReportingManager.cs" />
     <Compile Include="Model\Scoring\LinearScoringTable.cs" />
     <Compile Include="Model\Entity\Pixel.cs" />
     <Compile Include="Model\Entity\PixelCollection.cs" />
     <Compile Include="Model\Entity\PixelPair.cs" />
     <Compile Include="Model\Scoring\IScoringTable.cs" />
-    <Compile Include="Model\Scoring\ScoringFactory.cs" />
+    <Compile Include="Model\Scoring\ScoringTableFactory.cs" />
     <Compile Include="Model\Selection\BaseSelection.cs" />
     <Compile Include="Model\Scoring\AdjustedScoringTable.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />

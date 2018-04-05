@@ -2,16 +2,9 @@
 
 namespace ColorVisualisation.Model.Crossing
 {
-    class CrossingByAverage : BaseCrossing
+    class AverageCrossing : BaseCrossing
     {
-        public override PixelCollection Execute(PixelCollection pixelContainer, int pixelsToSelect, int howManyChildren)
-        {
-            RandomlyBindPixelToPairs(pixelContainer, pixelsToSelect);
-            PixelCrossing(pixelContainer, pixelsToSelect, howManyChildren);
-            return pixelContainer;
-        }
-
-        private void PixelCrossing(PixelCollection pixelContainer, int pixelsToSelect, int howManyChildren)
+        protected override void PixelCrossing(PixelCollection pixelCollection, int pixelsToSelect, int howManyChildren)
         {
             int deadPixelIndex = pixelsToSelect;
             foreach (var pixelPair in _pixelPairs)
@@ -24,16 +17,16 @@ namespace ColorVisualisation.Model.Crossing
                         Green = Average(pixelPair.First.Green, pixelPair.Second.Green),
                         Red = Average(pixelPair.First.Red, pixelPair.Second.Red),
                         Alpha = byte.MaxValue,
-                        IndexColumn = pixelContainer.Pixels[deadPixelIndex].IndexColumn,
-                        IndexRow = pixelContainer.Pixels[deadPixelIndex].IndexRow,
-                        IndexGlobal = pixelContainer.Pixels[deadPixelIndex].IndexGlobal,
+                        IndexColumn = pixelCollection[deadPixelIndex].IndexColumn,
+                        IndexRow = pixelCollection[deadPixelIndex].IndexRow,
+                        IndexGlobal = pixelCollection[deadPixelIndex].IndexGlobal,
                         RankingPoints = 0,
                     };
-                    pixelContainer.Pixels[deadPixelIndex] = newPixel;
+                    pixelCollection[deadPixelIndex] = newPixel;
                     deadPixelIndex++;
                 }
             }
-            pixelContainer.OrderAscending();
+            pixelCollection.OrderAscending();
             return;
         }
 

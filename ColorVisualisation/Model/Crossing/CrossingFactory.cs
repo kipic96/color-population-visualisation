@@ -1,5 +1,4 @@
-﻿using ColorVisualisation.Model.Entity;
-using ColorVisualisation.Properties;
+﻿using ColorVisualisation.Properties;
 using System;
 
 namespace ColorVisualisation.Model.Crossing
@@ -9,9 +8,9 @@ namespace ColorVisualisation.Model.Crossing
         public static BaseCrossing Create(string crossingType)
         {
             if (crossingType == Resources.AverageCrossing)
-                return new CrossingByAverage();
+                return new AverageCrossing();
             if (crossingType == Resources.BitCrossing)
-                return new CrossingByBit();
+                return new BitCrossing();
             throw new ArgumentException(Resources.ErrorCrossingType);
         }
     }

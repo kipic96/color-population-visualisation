@@ -12,13 +12,16 @@ namespace ColorVisualisation.Model.Helper.Conversion
 
         public static WriteableBitmap ToBitmap(PixelCollection pixels)
         {
-            var newBitmap = new WriteableBitmap(
-                    pixels.Width, pixels.Height, _dpi, _dpi, PixelFormats.Bgra32, null);
-            byte[] pixels1d = pixels.ToByteArray();
-            Int32Rect rect = new Int32Rect(0, 0, pixels.Width, pixels.Height);
-            int stride = _pixelValues * pixels.Width;
-            newBitmap.WritePixels(rect, pixels1d, stride, 0);
-            return newBitmap;
+            lock (pixels)
+            {
+                var newBitmap = new WriteableBitmap(
+                        pixels.Width, pixels.Height, _dpi, _dpi, PixelFormats.Bgra32, null);
+                byte[] pixels1d = pixels.ToByteArray();
+                Int32Rect rect = new Int32Rect(0, 0, pixels.Width, pixels.Height);
+                int stride = _pixelValues * pixels.Width;
+                newBitmap.WritePixels(rect, pixels1d, stride, 0);
+                return newBitmap;
+            }
         }
     }
 }

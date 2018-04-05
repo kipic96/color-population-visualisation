@@ -1,20 +1,19 @@
 ﻿using ColorVisualisation.Model;
-using ColorVisualisation.ViewModel.Base;
-using System.ComponentModel;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
+using ColorVisualisation.Model.Crossing;
+using ColorVisualisation.Model.Entity;
+using ColorVisualisation.Model.Helper.Conversion;
+using ColorVisualisation.Model.Helper.Generator;
+using ColorVisualisation.Model.Mutation;
+using ColorVisualisation.Model.Reporting;
+using ColorVisualisation.Model.Scoring;
 using ColorVisualisation.Properties;
+using ColorVisualisation.ViewModel.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using ColorVisualisation.Model.Helper.Generator;
-using ColorVisualisation.Model.Helper.Conversion;
-using ColorVisualisation.Model.Entity;
-using ColorVisualisation.Model.Crossing;
-using ColorVisualisation.Model.Scoring;
-using System.Threading;
+using System.ComponentModel;
 using System.Windows;
-using ColorVisualisation.Model.Reporting;
-using Microsoft.Win32;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace ColorVisualisation.ViewModel
 {
@@ -118,11 +117,10 @@ namespace ColorVisualisation.ViewModel
         {
             get
             {
-                lock (PixelCollection)
+                if (PixelCollection != null)
                 {
-                    if (PixelCollection != null)
-                        return PixelCollection.Deviation;
-                }
+                    return PixelCollection.Deviation;
+                }                    
                 return 0;
             }
             set { RaisePropertyChanged(nameof(PixelsDeviation)); }
@@ -363,10 +361,12 @@ namespace ColorVisualisation.ViewModel
             _geneticManager = new GeneticManager()
             {
                 PixelCollection = PixelCollection,
-                ScoringTable = ScoringFactory.Create(CurrentScoringType),
+                ScoringTable = ScoringTableFactory.Create(CurrentScoringType),
                 Crossing = CrossingFactory.Create(CurrentCrossingType),
                 PixelsToSelect = PixelsToSelect,
                 HowManyChildren = HowManyChildren,
+                Mutation = MutationFactory.Create(CurrentMutationType),
+                MutationRate = CurrentMutationRate,
             };
 
             IsVisualisationEnabled = true;
@@ -396,19 +396,18 @@ namespace ColorVisualisation.ViewModel
             {
                 var newAveragePixel = new List<Pixel>
                 {
-                    new Pixel()
-                    {
-                        Blue = PixelCollection.AverageBlue,
-                        Red = PixelCollection.AverageRed,
-                        Green = PixelCollection.AverageGreen,
-                        Alpha = byte.MaxValue,
-                    }
+                new Pixel()
+                {
+                    Blue = PixelCollection.AverageBlue,
+                    Red = PixelCollection.AverageRed,
+                    Green = PixelCollection.AverageGreen,
+                    Alpha = byte.MaxValue,
+                }
                 };
-                AverageColor = BitmapConverter.ToBitmap(new PixelCollection()
+                AverageColor = BitmapConverter.ToBitmap(new PixelCollection(newAveragePixel)
                 {
                     Height = 1,
                     Width = 1,
-                    Pixels = newAveragePixel,
                 });
             }
         }
@@ -418,14 +417,16 @@ namespace ColorVisualisation.ViewModel
             while (true)
             {
                 TurnsNumber++;
-                Thread.Sleep(20);
+                //Thread.Sleep(20);
                 if (_backgroundWorker.CancellationPending == false)
                 {
                     var newPixels = _geneticManager.NextGeneration();
+
                     lock (PixelCollection)
-                    {                        
-                        _backgroundWorker.ReportProgress(0, newPixels);                        
-                    }
+                    {
+                        _backgroundWorker.ReportProgress(0, newPixels);
+                    }                    
+                    
                     if (newPixels.AreAllPixelsEqual())
                     {
                         MessageBox.Show(Resources.VisualisationEnded);

@@ -1,5 +1,4 @@
 ﻿using ColorVisualisation.Model.Entity;
-using ColorVisualisation.Properties;
 using System;
 using System.Collections.Generic;
 
@@ -9,9 +8,9 @@ namespace ColorVisualisation.Model.Crossing
     {
         protected IList<PixelPair> _pixelPairs;
 
-        protected void RandomlyBindPixelToPairs(PixelCollection pixelContainer, int pixelsToSelect)
+        protected void RandomlyBindPixelsIntoPairs(PixelCollection pixelCollection, int pixelsToSelect)
         {
-            pixelContainer.OrderByPoints();
+            pixelCollection.OrderByPoints();
             _pixelPairs = new List<PixelPair>();
             var alreadySelectedPixelsIds = new List<int>();
             var randomGenerator = new Random();
@@ -28,14 +27,24 @@ namespace ColorVisualisation.Model.Crossing
                     alreadySelectedPixelsIds.Add(newIndex);
                     _pixelPairs.Add(new PixelPair()
                     {
-                        First = pixelContainer.Pixels[index],
-                        Second = pixelContainer.Pixels[newIndex]
+                        First = pixelCollection[index],
+                        Second = pixelCollection[newIndex],
                     });
                 }
             }
             return;
         }
 
-        public abstract PixelCollection Execute(PixelCollection pixelContainer, int pixelsToSelect, int howManyChildren);
+        public PixelCollection Execute(PixelCollection pixelCollection, int pixelsToSelect, int howManyChildren)
+        {
+            lock (pixelCollection)
+            {
+                RandomlyBindPixelsIntoPairs(pixelCollection, pixelsToSelect);
+                PixelCrossing(pixelCollection, pixelsToSelect, howManyChildren);
+                return pixelCollection;
+            }            
+        }
+
+        protected abstract void PixelCrossing(PixelCollection pixelCollection, int pixelsToSelect, int howManyChildren);
     }
 }
