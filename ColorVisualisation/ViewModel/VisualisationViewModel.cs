@@ -11,6 +11,7 @@ using ColorVisualisation.ViewModel.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -76,7 +77,7 @@ namespace ColorVisualisation.ViewModel
             get { return _width; }
             set
             {
-                _width = NumberConversion.ToEvenNumber(value);
+                _width = NumberConverter.ToEvenNumber(value);
                 IsSizeChanged = true;
                 RaisePropertyChanged(nameof(Width));
                 RaisePropertyChanged(nameof(AllPixelsCount));
@@ -89,7 +90,7 @@ namespace ColorVisualisation.ViewModel
             get { return _height; }
             set
             {
-                _height = NumberConversion.ToEvenNumber(value);
+                _height = NumberConverter.ToEvenNumber(value);
                 IsSizeChanged = true;
                 RaisePropertyChanged(nameof(Height));
                 RaisePropertyChanged(nameof(AllPixelsCount));
@@ -109,7 +110,7 @@ namespace ColorVisualisation.ViewModel
 
         public int PixelsToSelect
         {
-            get { return NumberConversion.ToEvenNumber((int)(Width * Height / 2)); }
+            get { return NumberConverter.ToEvenNumber((int)(Width * Height / 2)); }
             set { RaisePropertyChanged(nameof(PixelsToSelect)); }
         }
 
@@ -417,7 +418,7 @@ namespace ColorVisualisation.ViewModel
             while (true)
             {
                 TurnsNumber++;
-                //Thread.Sleep(20);
+                Thread.Sleep(30);
                 if (_backgroundWorker.CancellationPending == false)
                 {
                     var newPixels = _geneticManager.NextGeneration();

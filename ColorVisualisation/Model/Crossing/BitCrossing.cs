@@ -18,24 +18,24 @@ namespace ColorVisualisation.Model.Crossing
                 var secondPixel = pixelPair.Second;                
                 
 
-                var blueBitsFirst = NumberConversion.ToBitArray(firstPixel.Blue);
-                var blueBitsSecond = NumberConversion.ToBitArray(secondPixel.Blue);
+                var blueBitsFirst = NumberConverter.ToBitArray(firstPixel.Blue);
+                var blueBitsSecond = NumberConverter.ToBitArray(secondPixel.Blue);
                 CrossPixels(ref blueBitsFirst, ref blueBitsSecond);                
                 
-                var redBitsFirst = NumberConversion.ToBitArray(firstPixel.Red);
-                var redBitsSecond = NumberConversion.ToBitArray(secondPixel.Red);
+                var redBitsFirst = NumberConverter.ToBitArray(firstPixel.Red);
+                var redBitsSecond = NumberConverter.ToBitArray(secondPixel.Red);
                 CrossPixels(ref redBitsFirst, ref redBitsSecond);
 
-                var greenBitsFirst = NumberConversion.ToBitArray(firstPixel.Green);
-                var greenBitsSecond = NumberConversion.ToBitArray(secondPixel.Green);
+                var greenBitsFirst = NumberConverter.ToBitArray(firstPixel.Green);
+                var greenBitsSecond = NumberConverter.ToBitArray(secondPixel.Green);
                 CrossPixels(ref greenBitsFirst, ref greenBitsSecond);
 
-                pixelCollection[deadPixelIndex].Blue = NumberConversion.ToInt(blueBitsFirst);
-                pixelCollection[deadPixelIndex].Red = NumberConversion.ToInt(redBitsFirst);
-                pixelCollection[deadPixelIndex].Green = NumberConversion.ToInt(greenBitsFirst);
-                pixelCollection[deadPixelIndex + 1].Blue = NumberConversion.ToInt(blueBitsSecond);
-                pixelCollection[deadPixelIndex + 1].Red = NumberConversion.ToInt(redBitsSecond);
-                pixelCollection[deadPixelIndex + 1].Green = NumberConversion.ToInt(greenBitsSecond);
+                pixelCollection[deadPixelIndex].Blue = NumberConverter.ToInt(blueBitsFirst);
+                pixelCollection[deadPixelIndex].Red = NumberConverter.ToInt(redBitsFirst);
+                pixelCollection[deadPixelIndex].Green = NumberConverter.ToInt(greenBitsFirst);
+                pixelCollection[deadPixelIndex + 1].Blue = NumberConverter.ToInt(blueBitsSecond);
+                pixelCollection[deadPixelIndex + 1].Red = NumberConverter.ToInt(redBitsSecond);
+                pixelCollection[deadPixelIndex + 1].Green = NumberConverter.ToInt(greenBitsSecond);
                 deadPixelIndex += howManyChildren;
             }
         }

@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace ColorVisualisation.Model.Helper.Conversion
 {
-    class NumberConversion
+    class NumberConverter
     {
         public static int ToEvenNumber(int number)
         {

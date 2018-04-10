@@ -22,7 +22,7 @@ namespace ColorVisualisation.Model
         {
             Selection.Execute(PixelCollection, ScoringTable, PixelsToSelect);            
             Crossing.Execute(PixelCollection, PixelsToSelect, HowManyChildren);
-            //Mutation.Execute(PixelCollection, MutationRate);
+            Mutation.Execute(PixelCollection, MutationRate);
             return PixelCollection;
         }    
     }

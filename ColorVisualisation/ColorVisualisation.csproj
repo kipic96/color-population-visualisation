@@ -61,7 +61,7 @@
     <Compile Include="Model\Crossing\BitCrossing.cs" />
     <Compile Include="Model\Crossing\CrossingFactory.cs" />
     <Compile Include="Model\Helper\Conversion\BitmapConverter.cs" />
-    <Compile Include="Model\Helper\Conversion\NumberConversion.cs" />
+    <Compile Include="Model\Helper\Conversion\NumberConverter.cs" />
     <Compile Include="Model\Helper\Conversion\PixelsConverter.cs" />
     <Compile Include="Model\Crossing\AverageCrossing.cs" />
     <Compile Include="Model\Crossing\BaseCrossing.cs" />
