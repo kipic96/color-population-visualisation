@@ -9,12 +9,12 @@ namespace ColorVisualisation.Model.Helper.Generator
         {
             var generator = new Random();
             var bitArray = new BitArray(arrayLenght);
-            for (int i = 0; i < onesCount; i++)
+            for (int i = 0; i < onesCount && i < arrayLenght; i++)
             {
                 bool bitSet = false;
                 while (!bitSet)
                 {
-                    var index = generator.Next(0, arrayLenght - 1);
+                    var index = generator.Next(0, 7);
                     if (bitArray[index] == false)
                     {
                         bitArray[index] = true;

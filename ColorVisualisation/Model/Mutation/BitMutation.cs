@@ -20,7 +20,7 @@ namespace ColorVisualisation.Model.Mutation
                         var blueBits = NumberConverter.ToBitArray(pixel.Blue);
                         var redBits = NumberConverter.ToBitArray(pixel.Red);
                         var greenBits = NumberConverter.ToBitArray(pixel.Green);
-                        var randomBits = BitArrayGenerator.GenerateBitArray(blueBits.Count, (int)(mutationStrengh));
+                        var randomBits = BitArrayGenerator.GenerateBitArray(blueBits.Count, onesCount: 4);
                         blueBits = blueBits.Xor(randomBits);
                         redBits = redBits.Xor(randomBits);
                         greenBits = greenBits.Xor(randomBits);
