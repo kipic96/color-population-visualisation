@@ -18,18 +18,12 @@ namespace ColorVisualisation.Model.Entity
 
         public IEnumerator<Pixel> GetEnumerator()
         {
-            lock (_pixels)
-            {
-                return _pixels.GetEnumerator();
-            }            
+            lock (_pixels) { return _pixels.GetEnumerator(); }            
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            lock (_pixels)
-            {
-                return _pixels.GetEnumerator();
-            }            
+            lock (_pixels) { return _pixels.GetEnumerator(); }            
         }
 
         public PixelCollection(IList<Pixel> pixels)
@@ -84,9 +78,9 @@ namespace ColorVisualisation.Model.Entity
                     int averageRed = AverageRed;
                     int averageGreen = AverageGreen;
                     return _pixels.Sum(pixel => 
-                        Math.Abs(pixel.Blue - AverageBlue) + 
-                        Math.Abs(pixel.Red - AverageRed) + 
-                        Math.Abs(pixel.Green - AverageGreen));
+                        Math.Abs(pixel.Blue - averageBlue) + 
+                        Math.Abs(pixel.Red - averageRed) + 
+                        Math.Abs(pixel.Green - averageGreen));
                 }
             }
         }

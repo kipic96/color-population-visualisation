@@ -34,7 +34,17 @@ namespace ColorVisualisation.ViewModel
             get { return _pixels; }
             set
             {
-                _pixels = value;
+                if (_pixels != null)
+                {
+                    lock (PixelCollection)
+                    {
+                        _pixels = value;
+                    }
+                }
+                else
+                {
+                    _pixels = value;
+                }                              
                 PixelsImage = BitmapConverter.ToBitmap(_pixels);
                 RaisePropertyChanged(nameof(PixelsDeviation));
                 IsBitmapReady = true;

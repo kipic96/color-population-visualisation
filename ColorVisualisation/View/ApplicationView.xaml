@@ -7,15 +7,15 @@
         xmlns:properties="clr-namespace:ColorVisualisation.Properties"
         mc:Ignorable="d"
         Title="Color Population Visualisation"
-        Width="1100"
-        MinWidth="1100"
-        Height="800"
-        MinHeight="800"
+        Width="1050"
+        MinWidth="1050"
+        Height="700"
+        MinHeight="700"
 >
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="3.3*" />
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Name="LeftGrid" Grid.Column="0">
@@ -78,10 +78,10 @@
             <Image Source="{Binding PixelsImage}"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   Width="700"
-                   Height="700"
+                   Width="600"
+                   Height="600"
                    UseLayoutRounding="True"
-                   Margin="10"
+                   Margin="5"
                    RenderOptions.BitmapScalingMode="NearestNeighbor">
             </Image>
         </Grid>

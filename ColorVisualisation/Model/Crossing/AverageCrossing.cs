@@ -7,26 +7,29 @@ namespace ColorVisualisation.Model.Crossing
         protected override void PixelCrossing(PixelCollection pixelCollection, int pixelsToSelect, int howManyChildren)
         {
             int deadPixelIndex = pixelsToSelect;
-            foreach (var pixelPair in _pixelPairs)
+            lock (pixelCollection)
             {
-                for (int i = 0; i < howManyChildren; i++)
+                foreach (var pixelPair in _pixelPairs)
                 {
-                    var newPixel = new Pixel()
+                    for (int i = 0; i < howManyChildren; i++)
                     {
-                        Blue = Average(pixelPair.First.Blue, pixelPair.Second.Blue),
-                        Green = Average(pixelPair.First.Green, pixelPair.Second.Green),
-                        Red = Average(pixelPair.First.Red, pixelPair.Second.Red),
-                        Alpha = byte.MaxValue,
-                        IndexColumn = pixelCollection[deadPixelIndex].IndexColumn,
-                        IndexRow = pixelCollection[deadPixelIndex].IndexRow,
-                        IndexGlobal = pixelCollection[deadPixelIndex].IndexGlobal,
-                        RankingPoints = 0,
-                    };
-                    pixelCollection[deadPixelIndex] = newPixel;
-                    deadPixelIndex++;
+                        var newPixel = new Pixel()
+                        {
+                            Blue = Average(pixelPair.First.Blue, pixelPair.Second.Blue),
+                            Green = Average(pixelPair.First.Green, pixelPair.Second.Green),
+                            Red = Average(pixelPair.First.Red, pixelPair.Second.Red),
+                            Alpha = byte.MaxValue,
+                            IndexColumn = pixelCollection[deadPixelIndex].IndexColumn,
+                            IndexRow = pixelCollection[deadPixelIndex].IndexRow,
+                            IndexGlobal = pixelCollection[deadPixelIndex].IndexGlobal,
+                            RankingPoints = 0,
+                        };
+                        pixelCollection[deadPixelIndex] = newPixel;
+                        deadPixelIndex++;
+                    }
                 }
-            }
-            pixelCollection.OrderAscending();
+                pixelCollection.OrderAscending();
+            }            
             return;
         }
 

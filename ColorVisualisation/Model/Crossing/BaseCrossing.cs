@@ -10,26 +10,30 @@ namespace ColorVisualisation.Model.Crossing
 
         protected void RandomlyBindPixelsIntoPairs(PixelCollection pixelCollection, int pixelsToSelect)
         {
-            pixelCollection.OrderByPoints();
-            _pixelPairs = new List<PixelPair>();
-            var alreadySelectedPixelsIds = new List<int>();
-            var randomGenerator = new Random();
-            for (int index = 0; index <= pixelsToSelect - 1; index++)
+            lock (pixelCollection)
             {
-                if (!alreadySelectedPixelsIds.Contains(index))
+                pixelCollection.OrderByPoints();
+                _pixelPairs = new List<PixelPair>();
+                var alreadySelectedPixelsIds = new List<int>();
+                var randomGenerator = new Random();
+                for (int index = 0; index <= pixelsToSelect - 1; index++)
                 {
-                    alreadySelectedPixelsIds.Add(index);
-                    int newIndex = randomGenerator.Next(index + 1, pixelsToSelect);
-                    while (alreadySelectedPixelsIds.Contains(newIndex))
+                    if (!alreadySelectedPixelsIds.Contains(index))
                     {
-                        newIndex = randomGenerator.Next(index + 1, pixelsToSelect);
+                        alreadySelectedPixelsIds.Add(index);
+                        int newIndex = randomGenerator.Next(index + 1, pixelsToSelect);
+                        while (alreadySelectedPixelsIds.Contains(newIndex))
+                        {
+                            newIndex = randomGenerator.Next(index + 1, pixelsToSelect);
+                        }
+                        alreadySelectedPixelsIds.Add(newIndex);
+                        _pixelPairs.Add(new PixelPair()
+                        {
+                            First = pixelCollection[index],
+                            Second = pixelCollection[newIndex],
+                        });
+
                     }
-                    alreadySelectedPixelsIds.Add(newIndex);
-                    _pixelPairs.Add(new PixelPair()
-                    {
-                        First = pixelCollection[index],
-                        Second = pixelCollection[newIndex],
-                    });
                 }
             }
             return;
