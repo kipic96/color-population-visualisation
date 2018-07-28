@@ -117,14 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdjustedScoring" xml:space="preserve">
+    <value>Adjusted</value>
+  </data>
   <data name="AppTitle" xml:space="preserve">
     <value>Color Population Visualisation</value>
+  </data>
+  <data name="AverageCrossing" xml:space="preserve">
+    <value>Average</value>
+  </data>
+  <data name="BitCrossing" xml:space="preserve">
+    <value>Bit</value>
   </data>
   <data name="BitmapHeight" xml:space="preserve">
     <value>10</value>
   </data>
   <data name="BitmapWidth" xml:space="preserve">
     <value>10</value>
+  </data>
+  <data name="BitMutation" xml:space="preserve">
+    <value>Bit</value>
   </data>
   <data name="ChildrenCount" xml:space="preserve">
     <value>2</value>
@@ -134,6 +146,9 @@
   </data>
   <data name="DPI" xml:space="preserve">
     <value>96</value>
+  </data>
+  <data name="LinearScoring" xml:space="preserve">
+    <value>Linear</value>
   </data>
   <data name="MutationRate" xml:space="preserve">
     <value>Mutation Rate</value>
@@ -153,6 +168,9 @@
   <data name="PixelsToSelectRatio" xml:space="preserve">
     <value>0,5</value>
   </data>
+  <data name="ScoringType" xml:space="preserve">
+    <value>Scoring Type</value>
+  </data>
   <data name="SelectionType" xml:space="preserve">
     <value>Selection Type</value>
   </data>
@@ -162,7 +180,58 @@
   <data name="StopVisualisation" xml:space="preserve">
     <value>Stop</value>
   </data>
-  <data name="VisualisationSpeed" xml:space="preserve">
-    <value>Visualisation Speed</value>
+  <data name="ValueMutation" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="VisualisationEnded" xml:space="preserve">
+    <value>Visualisation Ended</value>
+  </data>
+  <data name="ErrorCrossingType" xml:space="preserve">
+    <value>Crossing Type Not Good</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="HowManyChildren" xml:space="preserve">
+    <value>Children Per Parents</value>
+  </data>
+  <data name="HowManyChildrenDefault" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="PixelsToSelect" xml:space="preserve">
+    <value>Pixels To Select</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="PixelsToSelectDefault" xml:space="preserve">
+    <value>50</value>
+  </data>
+  <data name="ErrorScoringType" xml:space="preserve">
+    <value>Scoring Type Not Good</value>
+  </data>
+  <data name="AllPixelsCount" xml:space="preserve">
+    <value>All Pixels</value>
+  </data>
+  <data name="AverageColor" xml:space="preserve">
+    <value>Average Color</value>
+  </data>
+  <data name="CurrentTurn" xml:space="preserve">
+    <value>Current Turn</value>
+  </data>
+  <data name="PixelsDeviation" xml:space="preserve">
+    <value>Pixels Deviation</value>
+  </data>
+  <data name="DialogDefaultFileName" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="DialogExtension" xml:space="preserve">
+    <value>.txt</value>
+  </data>
+  <data name="DialogFilter" xml:space="preserve">
+    <value>txt files (.txt)|*.txt</value>
+  </data>
+  <data name="GenerateReport" xml:space="preserve">
+    <value>Generate Report</value>
   </data>
 </root>

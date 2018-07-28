@@ -19,7 +19,7 @@ namespace ColorVisualisation.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -61,11 +61,56 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjusted.
+        /// </summary>
+        public static string AdjustedScoring {
+            get {
+                return ResourceManager.GetString("AdjustedScoring", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Pixels.
+        /// </summary>
+        public static string AllPixelsCount {
+            get {
+                return ResourceManager.GetString("AllPixelsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color Population Visualisation.
         /// </summary>
         public static string AppTitle {
             get {
                 return ResourceManager.GetString("AppTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average Color.
+        /// </summary>
+        public static string AverageColor {
+            get {
+                return ResourceManager.GetString("AverageColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average.
+        /// </summary>
+        public static string AverageCrossing {
+            get {
+                return ResourceManager.GetString("AverageCrossing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bit.
+        /// </summary>
+        public static string BitCrossing {
+            get {
+                return ResourceManager.GetString("BitCrossing", resourceCulture);
             }
         }
         
@@ -88,6 +133,15 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bit.
+        /// </summary>
+        public static string BitMutation {
+            get {
+                return ResourceManager.GetString("BitMutation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 2.
         /// </summary>
         public static string ChildrenCount {
@@ -106,11 +160,110 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Turn.
+        /// </summary>
+        public static string CurrentTurn {
+            get {
+                return ResourceManager.GetString("CurrentTurn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string DialogDefaultFileName {
+            get {
+                return ResourceManager.GetString("DialogDefaultFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .txt.
+        /// </summary>
+        public static string DialogExtension {
+            get {
+                return ResourceManager.GetString("DialogExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to txt files (.txt)|*.txt.
+        /// </summary>
+        public static string DialogFilter {
+            get {
+                return ResourceManager.GetString("DialogFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 96.
         /// </summary>
         public static string DPI {
             get {
                 return ResourceManager.GetString("DPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crossing Type Not Good.
+        /// </summary>
+        public static string ErrorCrossingType {
+            get {
+                return ResourceManager.GetString("ErrorCrossingType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scoring Type Not Good.
+        /// </summary>
+        public static string ErrorScoringType {
+            get {
+                return ResourceManager.GetString("ErrorScoringType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Report.
+        /// </summary>
+        public static string GenerateReport {
+            get {
+                return ResourceManager.GetString("GenerateReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height.
+        /// </summary>
+        public static string Height {
+            get {
+                return ResourceManager.GetString("Height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Children Per Parents.
+        /// </summary>
+        public static string HowManyChildren {
+            get {
+                return ResourceManager.GetString("HowManyChildren", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.
+        /// </summary>
+        public static string HowManyChildrenDefault {
+            get {
+                return ResourceManager.GetString("HowManyChildrenDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Linear.
+        /// </summary>
+        public static string LinearScoring {
+            get {
+                return ResourceManager.GetString("LinearScoring", resourceCulture);
             }
         }
         
@@ -160,11 +313,47 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pixels Deviation.
+        /// </summary>
+        public static string PixelsDeviation {
+            get {
+                return ResourceManager.GetString("PixelsDeviation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pixels To Select.
+        /// </summary>
+        public static string PixelsToSelect {
+            get {
+                return ResourceManager.GetString("PixelsToSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 50.
+        /// </summary>
+        public static string PixelsToSelectDefault {
+            get {
+                return ResourceManager.GetString("PixelsToSelectDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,5.
         /// </summary>
         public static string PixelsToSelectRatio {
             get {
                 return ResourceManager.GetString("PixelsToSelectRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scoring Type.
+        /// </summary>
+        public static string ScoringType {
+            get {
+                return ResourceManager.GetString("ScoringType", resourceCulture);
             }
         }
         
@@ -196,11 +385,29 @@ namespace ColorVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visualisation Speed.
+        ///   Looks up a localized string similar to Value.
         /// </summary>
-        public static string VisualisationSpeed {
+        public static string ValueMutation {
             get {
-                return ResourceManager.GetString("VisualisationSpeed", resourceCulture);
+                return ResourceManager.GetString("ValueMutation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visualisation Ended.
+        /// </summary>
+        public static string VisualisationEnded {
+            get {
+                return ResourceManager.GetString("VisualisationEnded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width.
+        /// </summary>
+        public static string Width {
+            get {
+                return ResourceManager.GetString("Width", resourceCulture);
             }
         }
     }

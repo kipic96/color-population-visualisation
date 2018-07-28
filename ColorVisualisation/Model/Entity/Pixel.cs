@@ -1,4 +1,4 @@
-﻿namespace ColorVisualisation.Model
+﻿namespace ColorVisualisation.Model.Entity
 {
     class Pixel
     {

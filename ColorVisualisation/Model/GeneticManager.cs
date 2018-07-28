@@ -1,35 +1,29 @@
-﻿using ColorVisualisation.Model.Conversion;
-using ColorVisualisation.Properties;
+﻿using ColorVisualisation.Model.Crossing;
+using ColorVisualisation.Model.Entity;
+using ColorVisualisation.Model.Mutation;
+using ColorVisualisation.Model.Scoring;
+using ColorVisualisation.Model.Selection;
 
 namespace ColorVisualisation.Model
 {
     class GeneticManager
     {
-        public GeneticManager(PixelContainer pixelContainer)
+        public PixelCollection PixelCollection { get; set; }
+        public BaseCrossing Crossing { get; set; }
+        public IScoringTable ScoringTable { get; set; }
+        public BaseMutation Mutation { get; set; }        
+        public int PixelsToSelect { get; set; }
+        public int HowManyChildren { get; set; }
+        public double MutationRate { get; set; }
+        private BaseSelection Selection { get; set; } = new BaseSelection();
+
+
+        public PixelCollection NextGeneration()
         {
-            _pixelContainer = pixelContainer;
-             _pixelsToSelect = new NumberConversion().ToEvenNumber
-                ((int)(_pixelContainer.Width * _pixelContainer.Height
-                    / (_valuesInPixel * _pixelsToSelectRatio)));
-        }
-
-        private PixelContainer _pixelContainer;
-        private Selection _selection;
-        private CrossoverStyle _crossover;
-
-        private int _howManyChildren = int.Parse(Resources.ChildrenCount);
-        private int _pixelsToSelect;
-        private int _valuesInPixel = int.Parse(Resources.NumberOfValuesInPixel);
-        private double _pixelsToSelectRatio = double.Parse(Resources.PixelsToSelectRatio);
-
-        public PixelContainer NextGeneration()
-        {
-            _selection = new Selection(_pixelContainer, _pixelsToSelect);
-            _selection.Execute();
-            _crossover = new CrossoverByAverage(_pixelContainer, _pixelsToSelect, _howManyChildren);
-            _crossover.Execute();
-            _pixelContainer.Shuffle();
-            return _pixelContainer;
+            Selection.Execute(PixelCollection, ScoringTable, PixelsToSelect);            
+            Crossing.Execute(PixelCollection, PixelsToSelect, HowManyChildren);
+            Mutation.Execute(PixelCollection, MutationRate);
+            return PixelCollection;
         }    
     }
 }
